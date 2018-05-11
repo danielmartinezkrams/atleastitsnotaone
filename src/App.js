@@ -4,7 +4,29 @@ import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class App extends Component {
-  render() {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            open: false,
+        };
+    }
+    handleClick = (event) => {
+        event.preventDefault();
+
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget,
+        });
+    };
+
+    handleRequestClose = () => {
+        this.setState({
+            open: false,
+        });
+    };
+
+    render() {
     return (
         <MuiThemeProvider>
              <div className="App">
