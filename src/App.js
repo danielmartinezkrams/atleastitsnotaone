@@ -2,23 +2,14 @@ import React, { Component } from 'react';
 import logo from './logo.png';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import IconMenu from 'material-ui/DropDownMenu';
+import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import { Switch, Route, Link } from 'react-router-dom';
 import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import VertIcon from 'material-ui/svg-icons/navigation/more-vert';
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false,
-        };
-    }
-
-    handleChange = (event, index, value) => this.setState({value});
-
-    render() {
+  render() {
     return (
         <MuiThemeProvider>
              <div className="App">
@@ -26,7 +17,7 @@ class App extends Component {
                   <img src={logo} className="App-logo" alt="logo" />
                     <h1 className="App-title">At Least It's not a One</h1>
                     <div>
-                        <IconMenu iconButtonElement={<IconButton><MoreVertIcon /></IconButton>} anchorOrigin={{horizontal: 'left', vertical: 'top'}} targetOrigin={{horizontal: 'left', vertical: 'top'}}>
+                        <IconMenu iconStyle={{color: "white"}} iconButtonElement={<IconButton><VertIcon/></IconButton>} anchorOrigin={{horizontal: 'left', vertical: 'top'}} targetOrigin={{horizontal: 'left', vertical: 'top'}}>
                             <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
                             <MenuItem primaryText="Page One" containerElement={<Link to="/pageOne" />}/>
                             <MenuItem primaryText="Page Two" containerElement={<Link to="/pageTwo" />}/>
