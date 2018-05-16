@@ -1,0 +1,159 @@
+import React, {Component} from 'react';
+import logo from "../img/logo.png";
+import axios from "axios";
+import {Link } from 'react-router-dom';
+import {TableRow, TableHeaderColumn, TableBody, Table, TableHeader} from "../../node_modules/material-ui/Table";
+
+class Login extends Component {
+    constructor(props) {
+        super(props);
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
+        this.logout = this.logout.bind(this);
+        this.url = "https://roast-my-teacher-backend.herokuapp.com/api/";
+        this.state = {
+            isLoggedIn: this.props.isLoggedIn,
+            alert: false,
+            selected: [],
+            noData: false
+        }
+    }
+    handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
+    }
+    handleSubmit(e){
+        e.preventDefault();
+        axios.get(this.url + "students/" + this.state.id)
+            .then((response) => {
+                if(response.data === null){
+                    this.setState({
+                        alert: true
+                    });
+                }
+                else{
+                    const info = {
+                        class: response.data.class,
+                        first: response.data.first,
+                        last: response.data.last,
+                        studentID: response.data.studentID,
+                        _id: response.data._id,
+                        from: response.data.first + " " + response.data.last + " " + response.data.class
+                    };
+                    this.setState({
+                        isLoggedIn: true,
+                        alert: true,
+                        info: info
+                    });
+                    this.props.function(this.state.isLoggedIn, info);
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    componentDidMount(){
+        if(this.state.isLoggedIn) {
+            this.getData()
+        }
+    }
+
+    closeAlert() {
+        this.setState({ alert: false });
+    }
+    logout(){
+        this.setState({
+            isLoggedIn: false,
+            info: ""
+        });
+        this.props.function(false, "");
+    }
+    handleRowSelection = (selectedRows) => {
+        this.setState({
+            selected: selectedRows,
+        });
+    };
+    handleDelete(){
+        if(!this.state.noData){
+            axios.delete(this.url + "roasts/" + this.state.items[this.state.selected]._id)
+                .then((response) => {
+                    this.getData()
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+    }
+    render() {
+        let alert = null;
+        if(this.state.alert){
+            if (!this.state.isLoggedIn) {
+                alert = <div className="alert">Login Unsuccessful<button onClick={() => this.closeAlert()}>Try Again</button></div>;
+            } else {
+                let to = "/";
+                const array = this.props.match.params;
+                if(!isEmpty(array)){
+                    to = "/teacher/" + array.refer
+                }
+                alert = <div className="alert">{this.state.info.first} {this.state.info.last} Login Successful <Link onClick={() => this.closeAlert()} to={to}>Continue</Link></div>
+            }
+        }
+        else if(this.state.isLoggedIn){
+            return (
+                <div className="Login">
+                    <h3>
+                        {this.props.info.first} {this.props.info.last}<br/>
+                        {this.props.info.class}
+                    </h3>
+                    <button onClick={this.logout}>Log Out</button>
+                    <h4>My roasts</h4>
+                    <Table className="table" onRowSelection={this.handleRowSelection}>
+                        <TableHeader displaySelectAll={false} adjustForCheckbox={true}>
+                            <TableRow>
+                                <TableHeaderColumn>Teacher</TableHeaderColumn>
+                                <TableHeaderColumn>Date</TableHeaderColumn>
+                                <TableHeaderColumn>Review</TableHeaderColumn>
+                                <TableHeaderColumn>Roast</TableHeaderColumn>
+                                <TableHeaderColumn>Chef</TableHeaderColumn>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={true}>
+                            {this.state.display}
+                        </TableBody>
+                    </Table>
+                    <button onClick={this.handleDelete}>Delete</button>
+                </div>
+            )
+        }
+        return (
+            <div className="Login">
+                <img src={logo}  alt="logo" className="titleLogo" />
+                <h1 className="App-title">ROAST MY TEACHER</h1>
+                <br/>
+                {alert}
+                <form className="confirm" onSubmit={this.handleSubmit}>
+                    <label className="verification">Student Verification</label>
+                    <input className="idCheck" name="id" type="number" onChange={this.handleChange}/>
+                    <input className="confirmButton" type="submit" value="Submit"/>
+                    <p>Enter last 4 digits of student ID and day of birth (ex: 012301)</p>
+                </form>
+            </div>
+        );
+    }
+}
+
+function isEmpty(obj) {
+    if (obj === null) return true;
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+    if (typeof obj !== "object") return true;
+    for (const key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+    return true;
+}
+
+export default Login

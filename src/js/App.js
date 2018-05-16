@@ -23,6 +23,7 @@ class App extends Component {
                             <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
                             <MenuItem primaryText="Page One" containerElement={<Link to="/pageOne" />}/>
                             <MenuItem primaryText="Page Two" containerElement={<Link to="/pageTwo" />}/>
+                            <MenuItem primaryText="Login" containerElement={<Link to="/login" />}/>
                         </IconMenu>
                     </div>
                  </header>
