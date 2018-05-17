@@ -20,10 +20,10 @@ class App extends Component {
                     <h1 className="App-title">B-Eats</h1>
                     <div>
                         <IconMenu iconStyle={{color: "white"}} iconButtonElement={<IconButton><VertIcon/></IconButton>} anchorOrigin={{horizontal: 'left', vertical: 'top'}} targetOrigin={{horizontal: 'left', vertical: 'top'}}>
+                            <MenuItem primaryText="Login" containerElement={<Link to="/login" />}/>
                             <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
                             <MenuItem primaryText="Place Order" containerElement={<Link to="/pageOne" />}/>
                             <MenuItem primaryText="Make Delivery" containerElement={<Link to="/pageTwo" />}/>
-                            <MenuItem primaryText="Login" containerElement={<Link to="/login" />}/>
                         </IconMenu>
                     </div>
                  </header>
