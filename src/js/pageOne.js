@@ -7,6 +7,7 @@ class pageOne extends Component {
             <h1>
                 Page One
             </h1>
+                <button type="button">Submit Order</button>
             </div>
         )
     }
