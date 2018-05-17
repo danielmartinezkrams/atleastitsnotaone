@@ -102,6 +102,7 @@ class Login extends Component {
                     <input className="pw" name="passWord" type="text" onChange={this.handleChange}/>
                     <input className="confirmButton" type="submit" value="Submit"/>
                 </form>
+                <button><Link to="/" /></button>
             </div>
         );
     }

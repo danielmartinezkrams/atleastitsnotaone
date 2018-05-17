@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import axios from "axios";
-import {Link } from 'react-router-dom';
 
 class CreateAccount extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.logout = this.logout.bind(this);
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/users";
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
@@ -23,32 +21,13 @@ class CreateAccount extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        axios.get(this.url + this.state.id)
-            .then((response) => {
-                if(response.data === null){
-                    this.setState({
-                        alert: true
-                    });
-                }
-                else{
-                    const info = {
-                        class: response.data.class,
-                        first: response.data.first,
-                        last: response.data.last,
-                        studentID: response.data.studentID,
-                        _id: response.data._id,
-                        from: response.data.first + " " + response.data.last + " " + response.data.class
-                    };
-                    this.setState({
-                        isLoggedIn: true,
-                        alert: true,
-                        info: info
-                    });
-                    this.props.function(this.state.isLoggedIn, info);
-                }
+        axios.post(this.url, {refer: this.state.refer, review: this.state.review, toast: this.state.roast, from: this.props.info.studentID, name: this.props.info.from})
+            .then(res => {
+                this.getData();
+                this.setState({roast: "", review: 0})
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch((err)=> {
+                console.log(err);
             });
     }
     componentDidMount(){
@@ -69,7 +48,11 @@ class CreateAccount extends Component {
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
                     <br />
-                    <input className="userName" name="userName" type="text" onChange={this.handleChange}/>
+                    <input className="name" name="firstName" type="text" onChange={this.handleChange}/>
+                    <br />
+                    <input className="name" name="lastName" type="text" onChange={this.handleChange}/>
+                    <br />
+                    <input className="email" name="email" type="email" onChange={this.handleChange}/>
                     <br />
                     <input className="pw" name="passWord" type="text" onChange={this.handleChange}/>
                     <input className="confirmButton" type="submit" value="Submit"/>
