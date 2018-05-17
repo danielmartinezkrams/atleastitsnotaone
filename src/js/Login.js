@@ -103,6 +103,7 @@ class Login extends Component {
                     <input className="confirmButton" type="submit" value="Submit"/>
                 </form>
                 <button><Link to="/" /></button>
+
             </div>
         );
     }
