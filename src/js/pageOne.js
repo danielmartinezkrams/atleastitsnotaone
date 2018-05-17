@@ -7,7 +7,7 @@ class pageOne extends Component {
             <h1>
                 Page One
             </h1>
-                <form>
+            <form>
                     Resturaunt:<br>
                     <input type="text" name="Choose Resturaunt"><br>
                         Meal:<br>
@@ -18,7 +18,7 @@ class pageOne extends Component {
                                 <input type="text" name="Additional items. Please specify">
                 </form>
                 <button type="button">Submit Order</button>
-            </div>
+            </div> />
         )
     }
 }
