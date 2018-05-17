@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../img/logo.png';
+import logo from '../img/B-Eats.png';
 import '../style/App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import IconMenu from 'material-ui/IconMenu';
