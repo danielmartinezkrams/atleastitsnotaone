@@ -5,6 +5,7 @@ import Home from './Home';
 import pageOne from './pageOne';
 import pageTwo from './pageTwo';
 import Login from "./Login";
+import CreateAccount from "./CreateAccount";
 
 class Main extends Component {
     render(){
@@ -15,6 +16,7 @@ class Main extends Component {
                     <Route path="/pageOne" component={pageOne}/>
                     <Route path="/pageTwo" component={pageTwo}/>
                     <Route path="/login" component={Login}/>
+                    <Route path="/createAccount" component={CreateAccount}/>
                 </div>
             </Switch>
         )
