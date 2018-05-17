@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import axios from "axios";
 import {Link } from 'react-router-dom';
 
-class Login extends Component {
+class CreateAccount extends Component {
     constructor(props) {
         super(props);
         this.handleChange = this.handleChange.bind(this);
@@ -60,42 +60,14 @@ class Login extends Component {
     closeAlert() {
         this.setState({ alert: false });
     }
-    logout(){
-        this.setState({
-            isLoggedIn: false,
-            info: ""
-        });
-        this.props.function(false, "");
-    }
+
 
     render() {
-        let alert = null;
-        if(this.state.alert){
-            if (!this.state.isLoggedIn) {
-            } else {
-                let to = "/";
-                const array = this.props.match.params;
-                if(!isEmpty(array)){
-                    to = "/teacher/" + array.refer;
-                }
-                alert = <div className="alert">{this.state.info.first} {this.state.info.last} Login Successful <Link onClick={() => this.closeAlert()} to={to}>Continue</Link></div>
-            }
-        }
-        else if(this.state.isLoggedIn){
-            return (
-                <div className="Login">
-                    <h3>
-                        {this.props.info.first} {this.props.info.last}<br/>
-                    </h3>
-                    <button onClick={this.logout}>Log Out</button>
-                </div>
-            )
-        }
         return (
             <div className="Login">
                 {alert}
                 <form className="confirm" onSubmit={this.handleSubmit}>
-                    <label className="verification"><h2>Login</h2></label>
+                    <label className="verification"><h2>Create Account</h2></label>
                     <br />
                     <input className="userName" name="userName" type="text" onChange={this.handleChange}/>
                     <br />
@@ -118,4 +90,4 @@ function isEmpty(obj) {
     return true;
 }
 
-export default Login
+export default CreateAccount

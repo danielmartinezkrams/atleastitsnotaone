@@ -9,7 +9,6 @@ import IconButton from 'material-ui/IconButton';
 import VertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import Main from './Main';
 
-
 class App extends Component {
   render() {
     return (
