@@ -15,10 +15,10 @@ class pageOne extends Component {
                             Drink:<br>
                             <input type="text" name="Choose Drink">
                                 Options:<br>
-                                <input type="text" name="Additional items. Please specify">
+                                <input type="text" name="Additional items. Please specify"/>
                 </form>
                 <button type="button">Submit Order</button>
-            </div> />
+            </div>
         )
     }
 }
