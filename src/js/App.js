@@ -21,8 +21,8 @@ class App extends Component {
                     <div>
                         <IconMenu iconStyle={{color: "white"}} iconButtonElement={<IconButton><VertIcon/></IconButton>} anchorOrigin={{horizontal: 'left', vertical: 'top'}} targetOrigin={{horizontal: 'left', vertical: 'top'}}>
                             <MenuItem primaryText="Home" containerElement={<Link to="/" />}/>
-                            <MenuItem primaryText="Page One" containerElement={<Link to="/pageOne" />}/>
-                            <MenuItem primaryText="Page Two" containerElement={<Link to="/pageTwo" />}/>
+                            <MenuItem primaryText="Place Order" containerElement={<Link to="/pageOne" />}/>
+                            <MenuItem primaryText="Make Delivery" containerElement={<Link to="/pageTwo" />}/>
                             <MenuItem primaryText="Login" containerElement={<Link to="/login" />}/>
                         </IconMenu>
                     </div>
