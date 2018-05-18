@@ -10,8 +10,6 @@ class CreateAccount extends Component {
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
             alert: false,
-            selected: [],
-            noData: false
         }
     }
     handleChange(e){
@@ -21,40 +19,41 @@ class CreateAccount extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        axios.post(this.url, {refer: this.state.refer, review: this.state.review, toast: this.state.roast, from: this.props.info.studentID, name: this.props.info.from})
-            .then(res => {
-                this.getData();
-                this.setState({roast: "", review: 0})
+        axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password})
+            .then(response => {
+                const info = {
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName,
+                    email: response.data.email,
+                    password: response.data.password,
+                };
+                this.props.function(true, info);
             })
             .catch((err)=> {
                 console.log(err);
             });
     }
-    componentDidMount(){
-        if(this.state.isLoggedIn) {
-            this.getData()
-        }
-    }
-
-    closeAlert() {
-        this.setState({ alert: false });
-    }
-
 
     render() {
+        console.log(this.state);
+        let alert = null;
+        if(this.state.alert){
+
+        }
         return (
             <div className="Login">
                 {alert}
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
                     <br />
-                    <input className="name" name="firstName" type="text" onChange={this.handleChange}/>
+                    First <input className="name" name="firstName" type="text" autocomplete='given-name' onChange={this.handleChange}/>
                     <br />
-                    <input className="name" name="lastName" type="text" onChange={this.handleChange}/>
+                    Last <input className="name" name="lastName" type="text" autocomplete='family-name' onChange={this.handleChange}/>
                     <br />
-                    <input className="email" name="email" type="email" onChange={this.handleChange}/>
+                    Email <input className="email" name="email" type="email" autocomplete='email' onChange={this.handleChange}/>
                     <br />
-                    <input className="pw" name="passWord" type="text" onChange={this.handleChange}/>
+                    Create Password <input className="pw" name="password" type="password" onChange={this.handleChange}/>
+                    <br />
                     <input className="confirmButton" type="submit" value="Submit"/>
                 </form>
             </div>

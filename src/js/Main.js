@@ -8,15 +8,28 @@ import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 
 class Main extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {isLoggedIn: false};
+        this.handler = this.handler.bind(this)
+    }
+
+    handler(x, y) {
+        this.setState({
+            isLoggedIn: x,
+            info: y
+        })
+    }
+
     render(){
         return(
             <Switch>
                 <div className="content">
-                    <Route exact path="/" component={Home}/>
-                    <Route path="/pageOne" component={pageOne}/>
-                    <Route path="/pageTwo" component={pageTwo}/>
-                    <Route path="/login" component={Login}/>
-                    <Route path="/createAccount" component={CreateAccount}/>
+                    <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
+                    <Route path="/pageOne" render={() => <pageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
+                    <Route path="/pageTwo" render={() => <pageTwo isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
+                    <Route path="/login" render={() => <Login isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
+                    <Route path="/createAccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>
             </Switch>
         )
