@@ -27,7 +27,7 @@ class Main extends Component {
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
                     <Route path="/pageOne" render={() => <pageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
-                    <Route path="/pageTwo" render={() => <pageTwo isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
+                    <Route path="/pageTwo" component={pageTwo}/>
                     <Route path="/login" render={() => <Login isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                     <Route path="/createAccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>
@@ -35,5 +35,7 @@ class Main extends Component {
         )
     }
 }
+
+//render={() => <pageTwo isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}
 
 export default Main;
