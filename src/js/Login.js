@@ -40,7 +40,7 @@ class Login extends Component {
                         alert: true,
                         info: info
                     });
-                    this.props.function(this.state.isLoggedIn, info);
+                    this.props.function(true, info);
                 }
             })
             .catch(function (error) {
