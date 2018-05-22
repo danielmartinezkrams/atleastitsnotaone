@@ -22,6 +22,7 @@ class Main extends Component {
     }
 
     render(){
+        console.log(this.state.isLoggedIn);
         return(
             <Switch>
                 <div className="content">

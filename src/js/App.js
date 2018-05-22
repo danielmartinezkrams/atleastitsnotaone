@@ -11,6 +11,7 @@ import Main from './Main';
 
 class App extends Component {
   render() {
+
     return (
         <MuiThemeProvider>
              <div className="App">
