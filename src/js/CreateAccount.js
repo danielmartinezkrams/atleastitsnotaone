@@ -12,6 +12,7 @@ class CreateAccount extends Component {
             alert: false,
         }
     }
+
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value,
