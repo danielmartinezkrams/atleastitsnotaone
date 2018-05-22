@@ -59,6 +59,7 @@ class App extends Component {
                             </Menu>
                         </div>
                     </div>
+
                  </header>
                  <Main />
             </div>
