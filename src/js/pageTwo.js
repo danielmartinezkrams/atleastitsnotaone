@@ -9,6 +9,7 @@ import suya from '../img/suya.png'
 
 
 class pageTwo extends Component {
+
     render(){
         const tileData = [{img: suya, title: 'Suya'}, {}];
         return(
