@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 
 class OrderForm extends Component {
     render(){
+        console.log(this.props.match.params.name);
         return(
             <div>
                 <h1>
                     Page One
                 </h1>
                 <form>
-                    Resturaunt:<br />
+                    Resturaunt: {this.props.match.params.name}<br />
                     <input type="text" name="Choose Resturaunt" />
                     <br />
                     Meal:
