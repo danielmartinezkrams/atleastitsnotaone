@@ -10,18 +10,13 @@ import suya from '../img/suya.png'
 
 class pageTwo extends Component {
     render(){
-        const { classes } = this.props;
-        const tileData = [{img: suya, title: 'Suya'}];
+        const tileData = [{img: suya, title: 'Suya'}, {}];
         return(
             <div>
-                HI
-            <h1>
-                Page Two
-            </h1>
-                <div className={classes.root}>
-                    <GridList cellHeight={180} className={classes.gridList}>
+                <div>
+                    <GridList cellHeight={180}>
                         <GridListTile key="Subheader" cols={2} style={{ height: 'auto' }}>
-                            <Subheader component="div">December</Subheader>
+                            <Subheader component="div">Restaurants</Subheader>
                         </GridListTile>
                         {tileData.map(tile => (
                             <GridListTile key={tile.img}>
@@ -29,7 +24,7 @@ class pageTwo extends Component {
                                 <GridListTileBar
                                     title={tile.title}
                                     actionIcon={
-                                        <IconButton className={classes.icon}>
+                                        <IconButton >
                                             <InfoIcon />
                                         </IconButton>
                                     }
