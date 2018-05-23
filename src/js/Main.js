@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../style/App.css';
 import { Switch, Route } from 'react-router-dom';
 import Home from './Home';
-import pageOne from './pageOne';
-import pageTwo from './pageTwo';
+import PageOne from './pageOne';
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 
@@ -27,8 +26,7 @@ class Main extends Component {
             <Switch>
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
-                    <Route path="/pageOne" render={() => <pageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
-                    <Route path="/pageTwo" component={pageTwo}/>
+                    <Route path="/pageOne" render={() => <PageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
                     <Route path="/login" render={() => <Login isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                     <Route path="/createAccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>

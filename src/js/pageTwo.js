@@ -10,7 +10,6 @@ import suya from '../img/suya.png'
 import sliver from '../img/sliver.jpeg'
 
 class pageTwo extends Component {
-
     render(){
         const tileData = [{img: suya, title: "Suya"}, {img: sliver, title:"Sliver"}, {}];
         return(
