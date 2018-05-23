@@ -26,7 +26,7 @@ class pageTwo extends Component {
                         </GridListTile>
                         {tileData.map(tile => (
                             <GridListTile key={tile.img}>
-                                <Link to={`pageTwo/${tile.title}`}>
+                                <Link to={`pageOne/${tile.title}`}>
                                 <img src={tile.img} alt={tile.title} />
                                 <GridListTileBar
                                     title={tile.title}
