@@ -10,13 +10,14 @@ import suya from '../img/suya.jpeg'
 import sliver from '../img/sliver.jpeg'
 import bongo from '../img/bongo.jpeg'
 import saigon from '../img/saigon.jpeg'
-
-
+import frescos from '../img/fresco.jpeg'
+import arinells from '../img/arinells.jpeg'
 
 class pageTwo extends Component {
     render(){
         const tileData = [{img: suya, title: "Suya"}, {img: sliver, title:"Sliver"},{img: bongo, title:"Bongo Burger"},
-            {img:saigon , title:"Saigon Express" }, ];
+            {img:saigon , title:"Saigon Express" },{img:frescos,title:"Fresco's"},{img:arinells,title:"Arinell's"},
+                ];
         return(
             <div>
                 <div>
