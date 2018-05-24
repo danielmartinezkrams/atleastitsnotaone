@@ -5,6 +5,7 @@ import Home from './Home';
 import PageOne from './pageOne';
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
+import AcceptOrder from "./AcceptOrder"
 
 class Main extends Component {
     constructor(props) {
@@ -29,6 +30,7 @@ class Main extends Component {
                     <Route path="/pageOne" render={() => <PageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
                     <Route path="/login" render={() => <Login isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                     <Route path="/createAccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
+                    <Route path="/makedelivery" render={() => <AcceptOrder isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>
             </Switch>
         )
