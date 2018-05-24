@@ -7,14 +7,14 @@ const data = [{"name": "Suya", "location": "", "menu":[
     {"name": "Sliver", "location": "", "menu":["Pizza of the day", "Salad"]},
     {"name": "Bongo Burger","location": "","menu":[ "'All American' Burger", "Turkey Burger", "Mushroom Burger", "Bacon Burger", "Polish Sausage", "Hot Dog",
         "S/M/L Soda",
-        "Shish Kabab Sandwhich", "Chicken Sandwhich", "Persian Burger Sandwhich", "Half-Persian Burger Sandwhich", "Steak Sandwhich",
+        "Shish Kabab Sandwich", "Chicken Sandwich", "Persian Burger Sandwich", "Half-Persian Burger Sandwich", "Steak Sandwich",
         "Full/Half Falafel",
         "Bongo Salad", "Homefries"]},
-    {"name": "Saigon Express","location": "","menu":[ "Ham/Meat Pie/Grilled Chicken/Grilled Pork/Veggie Sandwhich/Tofu/Fishcake",
+    {"name": "Saigon Express","location": "","menu":[ "Ham/Meat Pie/Grilled Chicken/Grilled Pork/Veggie Sandwich/Tofu/Fishcake",
         "Beef/Chicken Pho"]},
     {"name": "Fresco","location": "","menu":[ "Taco/Burrito/Quesadilla/Plate: Steak, Chicken, Carnitas, Veggie, Fish, Beans, Salsa, Cheese, Guac",
         "Tortilla Chips", "Water", "Soda"]},
     {"name": "Arinell's","location": "","menu":[ "Neopolitan (regular)", "Sicilian (deep dish)", "Vegan Slice",
-    "Various toppings",
+        "Various toppings",
         "S/L: Coke, Diet Coke, Sprite, Root Beer, Fruit Punch, Lemonade"]}
-    ];
+];
