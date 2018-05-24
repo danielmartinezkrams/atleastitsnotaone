@@ -54,8 +54,8 @@ class App extends Component {
                                    }}>
                                 <MenuItem><Link to="/login">Login</Link></MenuItem>
                                 <MenuItem><Link to="/">Home</Link></MenuItem>
-                                <MenuItem><Link to="/placeorder">Place Order</Link></MenuItem>
-                                <MenuItem><Link to="/pageOne">Make Delivery</Link></MenuItem>
+                                <MenuItem><Link to="/makedelivery">Make Delivery</Link></MenuItem>
+                                <MenuItem><Link to="/pageOne">Place Order</Link></MenuItem>
                             </Menu>
                         </div>
                     </div>

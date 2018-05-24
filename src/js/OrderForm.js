@@ -20,7 +20,6 @@ class OrderForm extends Component {
             .then((response) => {
                 console.log(response);
                 if(response.data.results_found > 0){
-                    console.log("hi");
                     this.setState({
                         response: response.data.restaurants[0].restaurant
                     })
@@ -31,10 +30,8 @@ class OrderForm extends Component {
             })
     }
     render(){
-        console.log(this.props.match.params.name);
-        console.log(this.state.response);
         let location = null;
-        if(this.state.response != ""){
+        if(this.state.response !== ""){
             location = this.state.response.location.address
         }
         return(

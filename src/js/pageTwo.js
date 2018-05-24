@@ -20,7 +20,7 @@ class pageTwo extends Component {
             {img: sliver, title:"Sliver"},
             {img: bongo, title:"Bongo Burger"},
             {img: saigon , title:"Saigon Express" },
-            {img: frescos, title:"Fresco's"},
+            {img: frescos, title:"Fresco"},
             {img: arinells, title:"Arinell's"},
         ];
         return(
