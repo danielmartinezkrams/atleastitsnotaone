@@ -15,13 +15,16 @@ class OrderForm extends Component {
             params: {
                 apikey: "d0e94af676033025fcc57acb863d9526",
                 lat: "37.862679",
-                lon: "-122.2694585"
+                lon: "-122.2705152"
             }})
             .then((response) => {
                 console.log(response);
-                this.setState({
-                    response: response.data.restaurants[0].restaurant
-                })
+                if(response.data.results_found > 0){
+                    console.log("hi");
+                    this.setState({
+                        response: response.data.restaurants[0].restaurant
+                    })
+                }
             })
             .catch(function (error) {
                 console.log(error);
@@ -30,11 +33,15 @@ class OrderForm extends Component {
     render(){
         console.log(this.props.match.params.name);
         console.log(this.state.response);
+        let location = null;
+        if(this.state.response != ""){
+            location = this.state.response.location.address
+        }
         return(
             <div>
-                Restaurant: {this.props.match.params.name}
+                <h2> Restaurant: {this.props.match.params.name} </h2>
                 <br />
-                {this.state.response.location.address}
+                {location}
             </div>
         )
     }

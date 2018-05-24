@@ -36,7 +36,6 @@ class CreateAccount extends Component {
     }
 
     render() {
-        console.log(this.state);
         let alert = null;
         if(this.state.alert){
 
