@@ -1,20 +1,42 @@
-const data = [{"name": "Suya", "location": "", "menu":[
-    "Beef Skewers", "Chicken Skewers", "Grilled Veggies Skewers", "Prawn Skewers", "Tilapia Fillet",
-    "Grilled Corn", "Roasted Potatoes", "Steamed Veggies", "Seasoned Rice", "Grilled Plantains", "Sweet Potato Chips", "Mixed Green Salad",
-    "Entree Salad", "Wrap",
-    "Tilapia Special", "Jamaican-Style Patties",
-    "Ginger Beer", "Water", "Ting", "Coke", "Diet Coke", "Sunkist", "Sprite"]},
-    {"name": "Sliver", "location": "", "menu":["Pizza of the day", "Salad"]},
-    {"name": "Bongo Burger","location": "","menu":[ "'All American' Burger", "Turkey Burger", "Mushroom Burger", "Bacon Burger", "Polish Sausage", "Hot Dog",
-        "S/M/L Soda",
-        "Shish Kabab Sandwich", "Chicken Sandwich", "Persian Burger Sandwich", "Half-Persian Burger Sandwich", "Steak Sandwich",
-        "Full/Half Falafel",
-        "Bongo Salad", "Homefries"]},
-    {"name": "Saigon Express","location": "","menu":[ "Ham/Meat Pie/Grilled Chicken/Grilled Pork/Veggie Sandwich/Tofu/Fishcake",
-        "Beef/Chicken Pho"]},
-    {"name": "Fresco","location": "","menu":[ "Taco/Burrito/Quesadilla/Plate: Steak, Chicken, Carnitas, Veggie, Fish, Beans, Salsa, Cheese, Guac",
-        "Tortilla Chips", "Water", "Soda"]},
-    {"name": "Arinell's","location": "","menu":[ "Neopolitan (regular)", "Sicilian (deep dish)", "Vegan Slice",
-        "Various toppings",
-        "S/L: Coke, Diet Coke, Sprite, Root Beer, Fruit Punch, Lemonade"]}
+let counter = 0;
+function createData(item, price) {
+    counter += 1;
+    return { id: counter, "item": item, "price": price};
+}
+
+const menuData = [
+    {
+        "name": "Suya",
+        "location": "",
+        "menu": [createData("Beef Skewers", 6.85), createData("Chicken Skewers", 6.85), createData("Grilled Veggies Skewers", 6.85), createData("Prawn Skewers", 8.95), createData("Tilapia Fillet", 7.90), createData("Grilled Corn", 2.65) , createData("Roasted Potatoes", 2.65), createData("Steamed Veggies", 2.65), createData("Seasoned Rice",2.65), createData("Grilled Plantains",2.65), createData("Sweet Potato Chips",2.65), createData("Tilapia Special", 10), createData("Mixed Green Salad", 2.65), createData("Entree Salad", 9.40), createData("Wrap", 7.30), createData("Jamaican-Style Patties", 3.70), createData("Ginger Beer", 1.60), createData("Water", 1.60), createData("Coke",1.60), createData("Diet Coke", 1.60), createData("Sunkist", 1.60), createData("Sprite", 1.60)]
+    },
+    {
+        "name": "Sliver",
+        "location": "",
+        "menu":[createData("Pizza of the day", 22), createData("Salad", 5)]
+    },
+    {
+        "name": "Bongo Burger",
+        "location": "",
+        "menu": [createData("All American Burger", 3.95), createData("Turkey Burger", 4.25), createData("Mushroom Burger", 5.25), createData("Bacon Burger", 5.25), createData("Polish Sausage", 3.95), createData("Hot Dog", 3.25), createData("Soda Large", 1.75), createData("Soda Medium", 1.50), createData("Soda Small", 1.20), createData("Shish Kaba Sandwich", 7.50), createData("Chicken Sandwich", 6.95), createData("Persian Burger Sandwich", 6.25), createData("Half-Persian Burger Sandwich", 3.95)]
+    },
+    {
+
+        "name": "Saigon Express",
+        "location": "",
+        "menu":[createData("Ham Sandwich", 2.50), createData("Meat Pie Sandwich", 2.50), createData("Grilled Chicken Sandwich", 2.75), createData("Grilled Pork Sandwich", 2.75), createData("Vegetarian Sandwich", 2.50), createData("Tofu Sandwich", 2.75), createData("Imperial Rolls", 3.95), createData("Vietnamese Moon Crepe", 6.45), createData("Clay Pot", 7.45), createData("Bird's Nest Noodles", 7.45), createData("Rare Sliced Beef Pho", 5.95), createData("Well-Done Beef Pho", 5.95), createData("Tofu Pho", 5.95), createData("Stir Fried Noodles", 6.45), createData("Fried Rice", 5.95), createData("Curry Chicken", 6.45), createData("Orange Flavored Chicken", 5.95), createData("Soft Drink", 1.25), createData("Grass Jelly", 1.50), createData("Thai Iced Tea", 2.75), createData("Iced Coffee", 3.00)]
+    },
+    {
+        "name": "Fresco",
+        "location": "",
+        "menu":[ createData("Taco (select ingredients below))", 2.50-3.80), createData("Burrito (select ingredients below)", 5.50-9), createData("Quesadilla (select ingredients below)", 6), createData("Plate (select ingredients below)", 8.50), createData("Steak", ), createData("Chicken", ), createData("Carnitas", ), createData("Veggie", ), createData("Fish", ), createData(" Black Beans", ), createData("Pinto Beans", ), createData("Salsa", ), createData("Cheese", ), createData("Guac", .50), createData("Sour Cream", ), createData("Tortilla Chips", ), createData("Water", ),
+
+    {
+        "name": "Arinell's",
+        "location": "",
+        "menu":[createData("Neopolitan (regular)", 3), createData("Sicilian (deep dish)", ), createData("Vegan Slice", 3.25), createData("With olives", ), createData("With extra cheese", ), createData("S/L Coke", 1.50), createData("S/L Diet Coke", ), createData("S/L Sprite", ), createData("S/L Root Beer", ), createData("S/L Fruit Punch", ), createData("S/L Lemonade", )]
+
+    }
 ];
+
+export default menuData;

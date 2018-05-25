@@ -16,7 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
-import menuData from './data'
+import menuData from '../database/sarah'
 
 let counter = 0;
 function createData(item, price) {
