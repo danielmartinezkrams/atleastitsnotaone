@@ -16,6 +16,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import menuData from './data'
 
 let counter = 0;
@@ -37,6 +38,7 @@ class OrderForm extends Component {
             selected: [],
             data: menuData,
             page: 0,
+            alert: false,
             rowsPerPage: 10.
         };
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
@@ -67,20 +69,20 @@ class OrderForm extends Component {
         this.setState({ data, order, orderBy });
     };
 
+    alert(){
+        this.setState({"alert": !this.state.alert});
+    }
+
     handleSubmit(){
-        let order = [];
-        let cost = 0;
-        for(let i = 0; i < this.state.selected.length; i++){
-            order.push(this.state.menu[i].item);
-            cost += this.state.menu[i].price
-        }
+        console.log(this.props.match.params.name);
+        console.log(this.props.info);
         axios.post(this.url, {"name": this.props.match.params.name, "order": order, "cost": cost, "time": "", "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
-            })
+            });
     }
 
     handleSelectAllClick = (event, checked) => {
@@ -159,12 +161,29 @@ class OrderForm extends Component {
                 )}
             </TableBody>)
         }
+        let alert = null;
+        if(this.state.alert){
+            let order = [];
+            let cost = 0;
+            for(let i = 0; i < this.state.selected.length; i++){
+                order.push(this.state.menu[i].item);
+                cost += this.state.menu[i].price
+            }
+            alert = (
+                <form onSubmit={this.handleSubmit}>
+                    <h3>Review Your Order:</h3><br />
+                    Items: {order}<br/>
+                    Cost: {cost}<br />
+                    PickUp Time: <TextField id="datetime-local" label="Pickup Time" type="datetime-local" required InputLabelProps={{shrink: true,}}/>
+                </form>)
+        }
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>
-                <Button variant="raised" color="secondary" onClick={this.handleSubmit}>
+                <Button variant="raised" color="secondary" onClick={this.alert} disabled={!this.props.isLoggedIn}>
                     Place Order
                 </Button>
+                {alert}
                 <br />
                 <Paper>
                     <Toolbar>
