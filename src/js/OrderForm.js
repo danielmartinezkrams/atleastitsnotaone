@@ -17,6 +17,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 
+let counter = 0;
+function createData(item, price) {
+    counter += 1;
+    return { id: counter, "item": item, "price": price};
+}
+
 class OrderForm extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +43,7 @@ class OrderForm extends Component {
                     {
                         "name": "Sliver",
                         "location": "",
-                        "menu":["Pizza of the day", "Salad"]
+                        "menu":[createData("Pizza of the day", 22), createData("Salad", 5)]
                     },
                     {
                         "name": "Bongo Burger",
@@ -150,7 +156,6 @@ class OrderForm extends Component {
     render(){
         const { data, order, orderBy, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-        console.log(this.state.rowCount + " " + this.state.selected.length);
         let body = null;
         if(this.state.menu !== ""){
             body = (<TableBody>
