@@ -25,11 +25,19 @@ function createData(item, price) {
     return { id: counter, item, price};
 }
 
+const display = {
+    display: 'block'
+};
+const hide = {
+    display: 'none'
+};
+
 class OrderForm extends Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggle = this.toggle.bind(this);
         this.state = {
             response: "",
             order: 'asc',
@@ -38,7 +46,7 @@ class OrderForm extends Component {
             selected: [],
             data: menuData,
             page: 0,
-            alert: false,
+            toggle: false,
             rowsPerPage: 10.
         };
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
@@ -69,20 +77,24 @@ class OrderForm extends Component {
         this.setState({ data, order, orderBy });
     };
 
-    alert(){
-        this.setState({"alert": !this.state.alert});
+    toggle(event) {
+        this.setState(prevState => ({
+            toggle: !prevState.toggle
+        }));
     }
 
-    handleSubmit(){
+    handleSubmit(event){
         console.log(this.props.match.params.name);
         console.log(this.props.info);
-        axios.post(this.url, {"name": this.props.match.params.name, "order": order, "cost": cost, "time": "", "client": this.props.info, "fulfilledBy": false})
+        console.log(event);
+        /*axios.post(this.url, {"name": this.props.match.params.name, "order": this.state.order, "cost": this.state.cost, "time": "", "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
+            */
     }
 
     handleSelectAllClick = (event, checked) => {
@@ -161,29 +173,36 @@ class OrderForm extends Component {
                 )}
             </TableBody>)
         }
-        let alert = null;
-        if(this.state.alert){
-            let order = [];
-            let cost = 0;
+        let food = [];
+        let cost = 0;
+        let modal = null;
+        if(this.state.toggle){
             for(let i = 0; i < this.state.selected.length; i++){
-                order.push(this.state.menu[i].item);
+                food.push(this.state.menu[i].item);
                 cost += this.state.menu[i].price
             }
-            alert = (
-                <form onSubmit={this.handleSubmit}>
-                    <h3>Review Your Order:</h3><br />
-                    Items: {order}<br/>
-                    Cost: {cost}<br />
-                    PickUp Time: <TextField id="datetime-local" label="Pickup Time" type="datetime-local" required InputLabelProps={{shrink: true,}}/>
-                </form>)
+            modal = (
+                <div className="modal" style={this.state.toggle ? display : hide}>
+                    <form>
+                        <h3>Review Your Order:</h3><br />
+                        Items: {food}<br/>
+                        Cost: {cost}<br />
+                        PickUp Time: <TextField id="datetime-local" label="Pickup Time" type="datetime-local" required InputLabelProps={{shrink: true,}}/>
+                        <Button variant="raised" color="secondary" onClick={this.handleSubmit} disabled={!this.props.isLoggedIn}>
+                            Confirm
+                        </Button>
+                    </form>
+                </div>
+            );
         }
+
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>
-                <Button variant="raised" color="secondary" onClick={this.alert} disabled={!this.props.isLoggedIn}>
+                <Button variant="raised" color="secondary" onClick={this.toggle} disabled={!this.props.isLoggedIn}>
                     Place Order
                 </Button>
-                {alert}
+                {modal}
                 <br />
                 <Paper>
                     <Toolbar>
