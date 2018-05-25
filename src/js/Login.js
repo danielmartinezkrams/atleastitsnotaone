@@ -60,7 +60,6 @@ class Login extends Component {
     }
 
     render() {
-        console.log(this.state);
         let alert = null;
         if(this.state.alert){
             if (!this.state.isLoggedIn) {
