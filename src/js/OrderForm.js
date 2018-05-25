@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from "axios";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,11 +15,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import Button from '@material-ui/core/Button';
 
 class OrderForm extends Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.state = {
             response: "",
             order: 'asc',
@@ -61,6 +64,7 @@ class OrderForm extends Component {
         };
         this.numSelected = this.state.selected.length;
         this.rowCount = this.state.data.length;
+        this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Item' },
             { id: 'price', numeric: true, disablePadding: false, label: 'Price ($)' }
@@ -88,12 +92,30 @@ class OrderForm extends Component {
         this.setState({ data, order, orderBy });
     };
 
+    handleSubmit(){
+        let order = [];
+        let cost = 0;
+        for(let i = 0; i < this.state.selected.length; i++){
+            order.push(this.state.menu[i].item);
+            cost += this.state.menu[i].price
+        }
+        axios.post(this.url, {"name": this.props.match.params.name, "order": order, "cost": cost, "time": "", "client": this.props.info})
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            })
+    }
+
     handleSelectAllClick = (event, checked) => {
         if (checked) {
             this.setState({ selected: this.state.menu.map(n => n.id) });
-            return;
         }
-        this.setState({ selected: [] });
+        else{
+            this.setState({ selected: [] });
+        }
+
     };
     createSortHandler = property => event => {
         this.props.onRequestSort(event, property);
@@ -167,6 +189,9 @@ class OrderForm extends Component {
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>
+                <Button variant="raised" color="secondary" onClick={this.handleSubmit}>
+                    Place Order
+                </Button>
                 <br />
                 <Paper>
                     <Toolbar>
