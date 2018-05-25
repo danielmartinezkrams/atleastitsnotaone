@@ -62,8 +62,6 @@ class OrderForm extends Component {
             page: 0,
             rowsPerPage: 10.
         };
-        this.numSelected = this.state.selected.length;
-        this.rowCount = this.state.data.length;
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Item' },
@@ -73,7 +71,7 @@ class OrderForm extends Component {
     componentDidMount() {
         for(let i = 0; i < this.state.data.length; i++){
             if(this.state.data[i].name === this.props.match.params.name){
-                this.setState({menu: this.state.data[i].menu})
+                this.setState({menu: this.state.data[i].menu, rowCount: this.state.data[i].menu.length})
             }
         }
     }
@@ -99,7 +97,7 @@ class OrderForm extends Component {
             order.push(this.state.menu[i].item);
             cost += this.state.menu[i].price
         }
-        axios.post(this.url, {"name": this.props.match.params.name, "order": order, "cost": cost, "time": "", "client": this.props.info})
+        axios.post(this.url, {"name": this.props.match.params.name, "order": order, "cost": cost, "time": "", "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
             })
@@ -117,9 +115,7 @@ class OrderForm extends Component {
         }
 
     };
-    createSortHandler = property => event => {
-        this.props.onRequestSort(event, property);
-    };
+
     handleClick = (event, id) => {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
@@ -154,6 +150,7 @@ class OrderForm extends Component {
     render(){
         const { data, order, orderBy, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+        console.log(this.state.rowCount + " " + this.state.selected.length);
         let body = null;
         if(this.state.menu !== ""){
             body = (<TableBody>
@@ -196,9 +193,9 @@ class OrderForm extends Component {
                 <Paper>
                     <Toolbar>
                         <div>
-                            {this.numSelected > 0 ? (
+                            {this.state.selected.length > 0 ? (
                                     <Typography color="inherit" variant="subheading">
-                                        {this.numSelected} selected
+                                        {this.state.selected.length} selected
                                     </Typography>
                                 ) : (
                                     <Typography variant="title" id="tableTitle">
@@ -208,7 +205,7 @@ class OrderForm extends Component {
                         </div>
                         <div/>
                         <div>
-                            {this.numSelected > 0 ? (
+                            {this.state.selected.length > 0 ? (
                                     <Tooltip title="Delete">
                                         <IconButton aria-label="Delete">
                                             <DeleteIcon />
@@ -225,12 +222,12 @@ class OrderForm extends Component {
                     </Toolbar>
                     <div>
                         <Table aria-labelledby="tableTitle">
-                            <TableHead>
+                            <TableHead >
                                 <TableRow>
                                     <TableCell padding="checkbox">
                                         <Checkbox
-                                            indeterminate={this.numSelected > 0 && this.numSelected < this.rowCount}
-                                            checked={this.numSelected === this.rowCount}
+                                            indeterminate={this.state.selected.length > 0 && this.state.selected.length < this.rowCount}
+                                            checked={this.state.selected.length === this.state.rowCount}
                                             onChange={this.handleSelectAllClick}
                                         />
                                     </TableCell>
@@ -250,7 +247,7 @@ class OrderForm extends Component {
                                                     <TableSortLabel
                                                         active={orderBy === column.id}
                                                         direction={order}
-                                                        onClick={this.createSortHandler(column.id)}
+                                                        onClick={this.handleRequestSort}
                                                     >
                                                         {column.label}
                                                     </TableSortLabel>
