@@ -17,7 +17,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import menuData from './data'
+import menuData from '../database/sarah'
 
 let counter = 0;
 function createData(item, price) {
@@ -32,11 +32,17 @@ const hide = {
     display: 'none'
 };
 
+const today = new Date();
+let month = today.getMonth() + 1;
+if(month < 10) month = "0" + month;
+const date = today.getFullYear() + '-' + (month) + '-' + today.getDate();
+
 class OrderForm extends Component {
     constructor(props) {
         super(props);
         this.componentDidMount = this.componentDidMount.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
         this.toggle = this.toggle.bind(this);
         this.state = {
             response: "",
@@ -45,6 +51,7 @@ class OrderForm extends Component {
             menu: "",
             selected: [],
             data: menuData,
+            time: date + "T12:15",
             page: 0,
             toggle: false,
             rowsPerPage: 10.
@@ -61,6 +68,11 @@ class OrderForm extends Component {
                 this.setState({menu: this.state.data[i].menu, rowCount: this.state.data[i].menu.length})
             }
         }
+    }
+    handleChange(e){
+        this.setState({
+            [e.target.name]: e.target.value,
+        });
     }
     handleRequestSort = (event, property) => {
         const orderBy = property;
@@ -83,18 +95,14 @@ class OrderForm extends Component {
         }));
     }
 
-    handleSubmit(event){
-        console.log(this.props.match.params.name);
-        console.log(this.props.info);
-        console.log(event);
-        /*axios.post(this.url, {"name": this.props.match.params.name, "order": this.state.order, "cost": this.state.cost, "time": "", "client": this.props.info, "fulfilledBy": false})
+    handleSubmit(food, cost, e){
+        axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
             })
             .catch(function (error) {
                 console.log(error);
             });
-            */
     }
 
     handleSelectAllClick = (event, checked) => {
@@ -139,12 +147,12 @@ class OrderForm extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render(){
-        const { data, order, orderBy, rowsPerPage, page } = this.state;
-        const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
+        const { menu, order, orderBy, rowsPerPage, page } = this.state;
+        const emptyRows = rowsPerPage - Math.min(rowsPerPage, menu.length - page * rowsPerPage);
         let body = null;
         if(this.state.menu !== ""){
             body = (<TableBody>
-                {this.state.menu.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                {menu.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const isSelected = this.isSelected(n.id);
                     return (
                         <TableRow
@@ -179,16 +187,16 @@ class OrderForm extends Component {
         if(this.state.toggle){
             for(let i = 0; i < this.state.selected.length; i++){
                 food.push(this.state.menu[i].item);
-                cost += this.state.menu[i].price
+                cost += menu[i].price
             }
             modal = (
                 <div className="modal" style={this.state.toggle ? display : hide}>
                     <form>
                         <h3>Review Your Order:</h3><br />
-                        Items: {food}<br/>
-                        Cost: {cost}<br />
-                        PickUp Time: <TextField id="datetime-local" label="Pickup Time" type="datetime-local" required InputLabelProps={{shrink: true,}}/>
-                        <Button variant="raised" color="secondary" onClick={this.handleSubmit} disabled={!this.props.isLoggedIn}>
+                        Items: {food.toString()}<br/>
+                        Cost: ${cost.toFixed(2)}<br />
+                        <TextField id="datetime-local" name="time" onChange={this.handleChange} label="Pickup Time" type="datetime-local" defaultValue={date + "T12:15"} required InputLabelProps={{shrink: true,}}/>
+                        <Button variant="raised" color="secondary" cost={cost} food={food} onClick={this.handleSubmit.bind(this, food, cost)} disabled={!this.props.isLoggedIn}>
                             Confirm
                         </Button>
                     </form>
@@ -276,7 +284,7 @@ class OrderForm extends Component {
                     </div>
                     <TablePagination
                         component="div"
-                        count={this.state.menu.length}
+                        count={menu.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         backIconButtonProps={{

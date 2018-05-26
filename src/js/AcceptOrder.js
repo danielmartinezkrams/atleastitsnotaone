@@ -165,7 +165,7 @@ class AcceptOrder extends Component {
                 </Toolbar>
                 <div>
                     <Table aria-labelledby="tableTitle">
-                        <TableHead onSelectAllClick={this.handleSelectAllClick} onRequestSort={this.handleRequestSort}>
+                        <TableHead>
                             <TableRow>
                                 <TableCell padding="checkbox">
                                     <Checkbox

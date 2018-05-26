@@ -72,14 +72,14 @@ class Login extends Component {
                     to = "/teacher/" + array.refer
                 }
                 */
-                alert = <div className="alert">{this.state.info.first} {this.state.info.last} Login Successful <Link onClick={() => this.closeAlert()} to={to}>Continue</Link></div>
+                alert = <div className="alert">{this.state.info.firstName} {this.state.info.lastName} Login Successful <Link onClick={() => this.closeAlert()} to={to}>Continue</Link></div>
             }
         }
         else if(this.state.isLoggedIn){
             return (
                 <div className="Login">
                     <h3>
-                        {this.props.info.first} {this.props.info.last}<br/>
+                        {this.props.info.firstName} {this.props.info.lastName}<br/>
                     </h3>
                     <button onClick={this.logout}>Log Out</button>
                 </div>

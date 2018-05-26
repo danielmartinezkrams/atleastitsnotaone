@@ -30,8 +30,8 @@ const menuData = [
     {
         "name": "Fresco",
         "location": "",
-        "menu":[ createData("Taco (select ingredients below))", 2.50-3.80), createData("Burrito (select ingredients below)", 5.50-9), createData("Quesadilla (select ingredients below)", 6), createData("Plate (select ingredients below)", 8.50), createData("Steak", ), createData("Chicken", ), createData("Carnitas", ), createData("Veggie", ), createData("Fish", ), createData(" Black Beans", ), createData("Pinto Beans", ), createData("Salsa", ), createData("Cheese", ), createData("Guac", .50), createData("Sour Cream", ), createData("Tortilla Chips", ), createData("Water", ),
-
+        "menu": [createData("Taco (select ingredients below))", 2.50 - 3.80), createData("Burrito (select ingredients below)", 5.50 - 9), createData("Quesadilla (select ingredients below)", 6), createData("Plate (select ingredients below)", 8.50), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Guac", .50), createData("Sour Cream",), createData("Tortilla Chips",), createData("Water",)]
+    },
     {
         "name": "Arinell's",
         "location": "",
