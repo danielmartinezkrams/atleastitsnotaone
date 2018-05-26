@@ -145,7 +145,8 @@ class OrderForm extends Component {
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, menu.length - page * rowsPerPage);
         let body = null;
         if(this.state.menu !== ""){
-            body = (<TableBody>
+            body = (
+                <TableBody>
                 {menu.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                     const isSelected = this.isSelected(n.id);
                     return (
@@ -180,7 +181,7 @@ class OrderForm extends Component {
         let modal = null;
         if(this.state.toggle){
             for(let i = 0; i < this.state.selected.length; i++){
-                food.push(this.state.menu[i].item);
+                food.push(this.state.menu[this.state.selected[i] - 1].item);
                 cost += menu[i].price
             }
             modal = (
@@ -198,7 +199,6 @@ class OrderForm extends Component {
                 </div>
             );
         }
-
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>

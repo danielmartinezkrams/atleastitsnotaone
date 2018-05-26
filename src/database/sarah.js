@@ -14,7 +14,7 @@ const menuData = [
     {
         "name": "Sliver",
         "location": "",
-        "menu":[createData("Pizza of the day", 22), createData("Salad", 5)]
+        "menu":[createData("Pizza of the day", 20), createData("Salad", 5.49), createData("Root Beer", 2.29), createData("Mexican Coke", 2.29), createData("Green Sauce", 0)]
     },
     {
         "name": "Bongo Burger",

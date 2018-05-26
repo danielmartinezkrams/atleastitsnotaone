@@ -15,12 +15,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-
-let counter = 0;
-function createData(name, calories, fat, carbs, protein) {
-    counter += 1;
-    return { id: counter, name, calories, fat, carbs, protein };
-}
+import Button from '@material-ui/core/Button';
 
 class AcceptOrder extends Component {
     constructor(props, context) {
@@ -29,33 +24,21 @@ class AcceptOrder extends Component {
             order: 'asc',
             orderBy: 'calories',
             selected: [],
-            data: [
-                createData('Cupcake', 305, 3.7, 67, 4.3),
-                createData('Donut', 452, 25.0, 51, 4.9),
-                createData('Eclair', 262, 16.0, 24, 6.0),
-                createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-                createData('Gingerbread', 356, 16.0, 49, 3.9),
-                createData('Honeycomb', 408, 3.2, 87, 6.5),
-                createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-                createData('Jelly Bean', 375, 0.0, 94, 0.0),
-                createData('KitKat', 518, 26.0, 65, 7.0),
-                createData('Lollipop', 392, 0.2, 98, 0.0),
-                createData('Marshmallow', 318, 0, 81, 2.0),
-                createData('Nougat', 360, 19.0, 9, 37.0),
-                createData('Oreo', 437, 18.0, 63, 4.0),
-            ].sort((a, b) => (a.calories < b.calories ? -1 : 1)),
+            data: "",
             page: 0,
             rowsPerPage: 5.
         };
         this.numSelected = this.state.selected.length;
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.rowCount = this.state.data.length;
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Restaurant' },
-            { id: 'order', numeric: true, disablePadding: false, label: 'Order' },
+            { id: 'order', numeric: false, disablePadding: false, label: 'Order' },
             { id: 'price', numeric: true, disablePadding: false, label: 'Price ($)' },
-            { id: 'time', numeric: true, disablePadding: false, label: 'Time' },
-            { id: 'client', numeric: true, disablePadding: false, label: 'Client' },
+            { id: 'time', numeric: false, disablePadding: false, label: 'Time' },
+            { id: 'note', numeric: false, disablePadding: false, label: 'Note' },
+            { id: 'client', numeric: false, disablePadding: false, label: 'Client' },
         ];
     }
 
@@ -81,14 +64,21 @@ class AcceptOrder extends Component {
         }
         this.setState({ selected: [] });
     };
-    createSortHandler = property => event => {
-        this.props.onRequestSort(event, property);
-    };
+
+    handleSubmit(){
+        axios.put(this.url, {"fulfilledBy": this.props.info})
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
     handleClick = (event, id) => {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
         let newSelected = [];
-
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, id);
         } else if (selectedIndex === 0) {
@@ -101,16 +91,24 @@ class AcceptOrder extends Component {
                 selected.slice(selectedIndex + 1),
             );
         }
-
         this.setState({ selected: newSelected });
     };
 
     componentDidMount(){
         axios.get(this.url)
             .then((response) => {
-                console.log(response);
+                let orders = [];
+                const today = new Date();
+                let month = today.getMonth() + 1;
+                if(month < 10) month = "0" + month;
+                const date = today.getFullYear() + '-' + (month) + '-' + today.getDate();
+                for(let i = 0; i < response.data.length; i++){
+                    if(!response.data[i].fulfilledBy && response.data[i].time.includes(date)){
+                        orders.push(response.data[i])
+                    }
+                }
                 this.setState({
-                    data: response
+                    "data": orders
                 })
             })
             .catch(function (error) {
@@ -131,9 +129,47 @@ class AcceptOrder extends Component {
     render() {
         const { data, order, orderBy, rowsPerPage, page } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-
+        let body = null;
+        console.log(this.state.selected);
+        if(data !== ""){
+            body = (
+                <TableBody>
+                {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                    const isSelected = this.isSelected(n._id);
+                    return (
+                        <TableRow
+                            hover
+                            onClick={event => this.handleClick(event, n._id)}
+                            role="checkbox"
+                            aria-checked={isSelected}
+                            tabIndex={-1}
+                            key={n._id}
+                            selected={isSelected}
+                        >
+                            <TableCell padding="checkbox">
+                                <Checkbox checked={isSelected} />
+                            </TableCell>
+                            <TableCell component="th" scope="row" padding="none">{n.name}</TableCell>
+                            <TableCell>{n.order.toString()}</TableCell>
+                            <TableCell numeric>{n.cost}</TableCell>
+                            <TableCell >{n.time.slice(11)}</TableCell>
+                            <TableCell >{n.note}</TableCell>
+                            <TableCell >{n.client.firstName + " " + n.client.lastName}</TableCell>
+                        </TableRow>
+                    );
+                })}
+                {emptyRows > 0 && (
+                    <TableRow style={{ height: 49 * emptyRows }}>
+                        <TableCell colSpan={6} />
+                    </TableRow>
+                )}
+            </TableBody>)
+        }
         return (
             <Paper>
+                <Button variant="raised" onClick={this.handleSubmit} color="secondary" disabled={!this.props.isLoggedIn}>
+                    Accept Order
+                </Button>
                 <Toolbar>
                     <div>
                         {this.numSelected > 0 ? (
@@ -190,7 +226,7 @@ class AcceptOrder extends Component {
                                                 <TableSortLabel
                                                     active={orderBy === column.id}
                                                     direction={order}
-                                                    onClick={this.createSortHandler(column.id)}
+                                                    onClick={this.handleRequestSort}
                                                 >
                                                     {column.label}
                                                 </TableSortLabel>
@@ -200,38 +236,7 @@ class AcceptOrder extends Component {
                                 }, this)}
                             </TableRow>
                         </TableHead>
-                        <TableBody>
-                            {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                                const isSelected = this.isSelected(n.id);
-                                return (
-                                    <TableRow
-                                        hover
-                                        onClick={event => this.handleClick(event, n.id)}
-                                        role="checkbox"
-                                        aria-checked={isSelected}
-                                        tabIndex={-1}
-                                        key={n.id}
-                                        selected={isSelected}
-                                    >
-                                        <TableCell padding="checkbox">
-                                            <Checkbox checked={isSelected} />
-                                        </TableCell>
-                                        <TableCell component="th" scope="row" padding="none">
-                                            {n.name}
-                                        </TableCell>
-                                        <TableCell numeric>{n.calories}</TableCell>
-                                        <TableCell numeric>{n.fat}</TableCell>
-                                        <TableCell numeric>{n.carbs}</TableCell>
-                                        <TableCell numeric>{n.protein}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                            {emptyRows > 0 && (
-                                <TableRow style={{ height: 49 * emptyRows }}>
-                                    <TableCell colSpan={6} />
-                                </TableRow>
-                            )}
-                        </TableBody>
+                        {body}
                     </Table>
                 </div>
                 <TablePagination
