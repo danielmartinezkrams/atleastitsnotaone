@@ -19,12 +19,6 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import menuData from '../database/sarah'
 
-let counter = 0;
-function createData(item, price) {
-    counter += 1;
-    return { id: counter, item, price};
-}
-
 const display = {
     display: 'block'
 };
@@ -96,7 +90,7 @@ class OrderForm extends Component {
     }
 
     handleSubmit(food, cost, e){
-        axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "client": this.props.info, "fulfilledBy": false})
+        axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "note": this.state.note, "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
             })
@@ -195,7 +189,8 @@ class OrderForm extends Component {
                         <h3>Review Your Order:</h3><br />
                         Items: {food.toString()}<br/>
                         Cost: ${cost.toFixed(2)}<br />
-                        <TextField id="datetime-local" name="time" onChange={this.handleChange} label="Pickup Time" type="datetime-local" defaultValue={date + "T12:15"} required InputLabelProps={{shrink: true,}}/>
+                        <TextField id="datetime-local" name="time" onChange={this.handleChange} label="Pickup Time" type="datetime-local" defaultValue={date + "T12:15"} required InputLabelProps={{shrink: true,}}/><br />
+                        <label>Note: </label><input type="text" name="note" onChange={this.handleChange}/>
                         <Button variant="raised" color="secondary" cost={cost} food={food} onClick={this.handleSubmit.bind(this, food, cost)} disabled={!this.props.isLoggedIn}>
                             Confirm
                         </Button>

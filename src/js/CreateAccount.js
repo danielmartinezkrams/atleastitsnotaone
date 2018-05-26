@@ -61,7 +61,7 @@ class CreateAccount extends Component {
     }
 }
 
-function isEmpty(obj) {
+/*function isEmpty(obj) {
     if (obj === null) return true;
     if (obj.length > 0)    return false;
     if (obj.length === 0)  return true;
@@ -70,6 +70,6 @@ function isEmpty(obj) {
         if (hasOwnProperty.call(obj, key)) return false;
     }
     return true;
-}
+}*/
 
 export default CreateAccount
