@@ -266,7 +266,7 @@ class AcceptOrder extends Component {
 
 const styles = theme => ({
     root: {
-        width: '100%',
+        width: '300px',
         marginTop: theme.spacing.unit * 3,
     },
     table: {

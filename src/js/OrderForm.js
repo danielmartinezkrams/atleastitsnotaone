@@ -26,6 +26,19 @@ const hide = {
     display: 'none'
 };
 
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+});
+
 const today = new Date();
 let month = today.getMonth() + 1;
 if(month < 10) month = "0" + month;
@@ -169,11 +182,11 @@ class OrderForm extends Component {
                         </TableRow>
                     );
                 })}
-                {emptyRows > 0 && (
-                    <TableRow style={{ height: 49 * emptyRows }}>
-                        <TableCell colSpan={6} />
-                    </TableRow>
-                )}
+                    {emptyRows > 0 && (
+                        <TableRow style={{ height: 49 * emptyRows }}>
+                            <TableCell colSpan={6} />
+                        </TableRow>
+                    )}
             </TableBody>)
         }
         let food = [];
@@ -298,17 +311,6 @@ class OrderForm extends Component {
     }
 }
 
-const styles = theme => ({
-    root: {
-        width: '100%',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 1020,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-});
+//deleting empty rows takes out space below table
 
 export default withStyles(styles)(OrderForm);

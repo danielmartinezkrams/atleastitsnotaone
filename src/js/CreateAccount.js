@@ -9,7 +9,6 @@ class CreateAccount extends Component {
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/users";
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
-            alert: false,
         }
     }
 
@@ -36,13 +35,8 @@ class CreateAccount extends Component {
     }
 
     render() {
-        let alert = null;
-        if(this.state.alert){
-
-        }
         return (
             <div className="Login">
-                {alert}
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
                     <br />
