@@ -52,7 +52,7 @@ class OrderForm extends Component {
         };
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
-            { id: 'name', numeric: false, disablePadding: true, label: 'Item' },
+            { id: 'item', numeric: false, disablePadding: true, label: 'Item' },
             { id: 'price', numeric: true, disablePadding: false, label: 'Price ($)' }
         ];
     }
@@ -68,18 +68,17 @@ class OrderForm extends Component {
             [e.target.name]: e.target.value,
         });
     }
-    handleRequestSort = (event, property) => {
+
+    createSortHandler = property => event => {
         const orderBy = property;
         let order = 'desc';
 
-        if (this.state.orderBy === property && this.state.order === 'desc') {
+        if (this.state.orderBy === orderBy && this.state.order === 'desc') {
             order = 'asc';
         }
-
         const data = order === 'desc'
             ? this.state.menu.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
             : this.state.menu.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
-
         this.setState({ data, order, orderBy });
     };
 
@@ -93,6 +92,7 @@ class OrderForm extends Component {
         axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "note": this.state.note, "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
                 console.log(response);
+                this.setState({"toggle": false})
             })
             .catch(function (error) {
                 console.log(error);
@@ -141,10 +141,10 @@ class OrderForm extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render(){
-        const { menu, order, orderBy, rowsPerPage, page } = this.state;
+        const { menu, order, orderBy, rowsPerPage, page, selected } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, menu.length - page * rowsPerPage);
         let body = null;
-        if(this.state.menu !== ""){
+        if(menu !== ""){
             body = (
                 <TableBody>
                 {menu.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
@@ -178,21 +178,25 @@ class OrderForm extends Component {
         }
         let food = [];
         let cost = 0;
-        let modal = null;
+        let alert = null;
         if(this.state.toggle){
-            for(let i = 0; i < this.state.selected.length; i++){
-                food.push(this.state.menu[this.state.selected[i] - 1].item);
-                cost += menu[i].price
+            for(let i = 0; i < selected.length; i++){
+                for(let j = 0; j < menu.length; j++){
+                    if(menu[j].id === selected[i]){
+                        food.push(menu[j].item);
+                        cost += menu[j].price
+                    }
+                }
             }
-            modal = (
-                <div className="modal" style={this.state.toggle ? display : hide}>
+            alert = (
+                <div className="alert" style={this.state.toggle ? display : hide}>
                     <form>
                         <h3>Review Your Order:</h3><br />
                         Items: {food.toString()}<br/>
                         Cost: ${cost.toFixed(2)}<br />
                         <TextField id="datetime-local" name="time" onChange={this.handleChange} label="Pickup Time" type="datetime-local" defaultValue={date + "T12:15"} required InputLabelProps={{shrink: true,}}/><br />
-                        <label>Note: </label><input type="text" name="note" onChange={this.handleChange}/>
-                        <Button variant="raised" color="secondary" cost={cost} food={food} onClick={this.handleSubmit.bind(this, food, cost)} disabled={!this.props.isLoggedIn}>
+                        <label>Note: </label><input type="text" name="note" onChange={this.handleChange}/><br />
+                        <Button variant="outlined" color="primary" cost={cost} food={food} onClick={this.handleSubmit.bind(this, food, cost)} disabled={!this.props.isLoggedIn}>
                             Confirm
                         </Button>
                     </form>
@@ -205,14 +209,14 @@ class OrderForm extends Component {
                 <Button variant="raised" color="secondary" onClick={this.toggle} disabled={!this.props.isLoggedIn}>
                     Place Order
                 </Button>
-                {modal}
+                {alert}
                 <br />
                 <Paper>
                     <Toolbar>
                         <div>
-                            {this.state.selected.length > 0 ? (
+                            {selected.length > 0 ? (
                                     <Typography color="inherit" variant="subheading">
-                                        {this.state.selected.length} selected
+                                        {selected.length} selected
                                     </Typography>
                                 ) : (
                                     <Typography variant="title" id="tableTitle">
@@ -222,7 +226,7 @@ class OrderForm extends Component {
                         </div>
                         <div/>
                         <div>
-                            {this.state.selected.length > 0 ? (
+                            {selected.length > 0 ? (
                                     <Tooltip title="Delete">
                                         <IconButton aria-label="Delete">
                                             <DeleteIcon />
@@ -243,8 +247,8 @@ class OrderForm extends Component {
                                 <TableRow>
                                     <TableCell padding="checkbox">
                                         <Checkbox
-                                            indeterminate={this.state.selected.length > 0 && this.state.selected.length < this.rowCount}
-                                            checked={this.state.selected.length === this.state.rowCount}
+                                            indeterminate={selected.length > 0 && selected.length < this.rowCount}
+                                            checked={selected.length === this.state.rowCount}
                                             onChange={this.handleSelectAllClick}
                                         />
                                     </TableCell>
@@ -264,7 +268,7 @@ class OrderForm extends Component {
                                                     <TableSortLabel
                                                         active={orderBy === column.id}
                                                         direction={order}
-                                                        onClick={this.handleRequestSort}
+                                                        onClick={this.createSortHandler(column.id)}
                                                     >
                                                         {column.label}
                                                     </TableSortLabel>
@@ -296,36 +300,5 @@ class OrderForm extends Component {
         )
     }
 }
-
-/*
- axios.get(this.url + this.props.match.params.name, {
- params: {
- apikey: "d0e94af676033025fcc57acb863d9526",
- lat: "37.862679",
- lon: "-122.2705152"
- }})
- .then((response) => {
- console.log(response);
- if(response.data.results_found > 0){
- this.setState({
- response: response.data.restaurants[0].restaurant
- })
- }
- })
- .catch(function (error) {
- console.log(error);
- })
- <br />
- <input type="text" name="Choose Resturaunt" />
- <br />
- Meal:
- <input type="text" name="Choose Meal" />
- Drink:
- <br />
- <input type="text" name="Choose Drink" />
- Options:<br />
- <input type="text" name="Additional items. Please specify"/>
- <button type="button">Submit Order</button>
- */
 
 export default OrderForm;

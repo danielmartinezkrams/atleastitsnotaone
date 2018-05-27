@@ -10,7 +10,20 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Main from './Main';
 
 const theme = createMuiTheme({
-    /* theme for v1.x */
+    palette: {
+        primary: {
+            light: '#757ce8',
+            main: '#3f50b5',
+            dark: '#002884',
+            contrastText: '#fff',
+        },
+        secondary: {
+            light: '#ff7961',
+            main: '#f44336',
+            dark: '#ba000d',
+            contrastText: '#000',
+        },
+    },
 });
 
 class App extends Component {
@@ -52,10 +65,10 @@ class App extends Component {
                                            width: 200,
                                        },
                                    }}>
-                                <MenuItem><Link to="/login">Login</Link></MenuItem>
                                 <MenuItem><Link to="/">Home</Link></MenuItem>
                                 <MenuItem><Link to="/makedelivery">Make Delivery</Link></MenuItem>
                                 <MenuItem><Link to="/pageOne">Place Order</Link></MenuItem>
+                                <MenuItem><Link to="/login">Login</Link></MenuItem>
                             </Menu>
                         </div>
                     </div>

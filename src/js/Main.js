@@ -6,6 +6,7 @@ import PageOne from './pageOne';
 import Login from "./Login";
 import CreateAccount from "./CreateAccount";
 import AcceptOrder from "./AcceptOrder"
+import Paper from '@material-ui/core/Paper';
 
 class Main extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class Main extends Component {
 
     render(){
         return(
+            <Paper className="content" elevation={2} color="primary">
             <Switch>
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
@@ -32,6 +34,7 @@ class Main extends Component {
                     <Route path="/makedelivery" render={() => <AcceptOrder isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>
             </Switch>
+            </Paper>
         )
     }
 }

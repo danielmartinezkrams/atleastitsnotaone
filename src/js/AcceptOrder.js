@@ -28,9 +28,7 @@ class AcceptOrder extends Component {
             page: 0,
             rowsPerPage: 5.
         };
-        this.numSelected = this.state.selected.length;
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.rowCount = this.state.data.length;
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Restaurant' },
@@ -42,37 +40,37 @@ class AcceptOrder extends Component {
         ];
     }
 
-    handleRequestSort = (event, property) => {
+    createSortHandler = property => event => {
         const orderBy = property;
         let order = 'desc';
 
-        if (this.state.orderBy === property && this.state.order === 'desc') {
+        if (this.state.orderBy === orderBy && this.state.order === 'desc') {
             order = 'asc';
         }
-
         const data = order === 'desc'
-                ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
-                : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
-
+            ? this.state.data.sort((a, b) => (b[orderBy] < a[orderBy] ? -1 : 1))
+            : this.state.data.sort((a, b) => (a[orderBy] < b[orderBy] ? -1 : 1));
         this.setState({ data, order, orderBy });
     };
 
     handleSelectAllClick = (event, checked) => {
         if (checked) {
-            this.setState({ selected: this.state.data.map(n => n.id) });
+            this.setState({ selected: this.state.data.map(n => n._id) });
             return;
         }
         this.setState({ selected: [] });
     };
 
     handleSubmit(){
-        axios.put(this.url, {"fulfilledBy": this.props.info})
-            .then((response) => {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        for(let i = 0; i < this.state.selected.length; i++){
+            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
 
     handleClick = (event, id) => {
@@ -127,10 +125,10 @@ class AcceptOrder extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render() {
-        const { data, order, orderBy, rowsPerPage, page } = this.state;
+        const { data, order, orderBy, rowsPerPage, page, selected } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
         let body = null;
-        console.log(this.state.selected);
+        console.log(selected);
         if(data !== ""){
             body = (
                 <TableBody>
@@ -172,9 +170,9 @@ class AcceptOrder extends Component {
                 </Button>
                 <Toolbar>
                     <div>
-                        {this.numSelected > 0 ? (
+                        {selected.length > 0 ? (
                                 <Typography color="inherit" variant="subheading">
-                                    {this.numSelected} selected
+                                    {selected.length} selected
                                 </Typography>
                             ) : (
                                 <Typography variant="title" id="tableTitle">
@@ -184,7 +182,7 @@ class AcceptOrder extends Component {
                     </div>
                     <div/>
                     <div>
-                        {this.numSelected > 0 ? (
+                        {selected.length > 0 ? (
                                 <Tooltip title="Delete">
                                     <IconButton aria-label="Delete">
                                         <DeleteIcon />
@@ -205,8 +203,8 @@ class AcceptOrder extends Component {
                             <TableRow>
                                 <TableCell padding="checkbox">
                                     <Checkbox
-                                        indeterminate={this.numSelected > 0 && this.numSelected < this.rowCount}
-                                        checked={this.numSelected === this.rowCount}
+                                        indeterminate={selected.length > 0 && selected.length < data.length}
+                                        checked={selected.length === data.length}
                                         onChange={this.handleSelectAllClick}
                                     />
                                 </TableCell>
@@ -226,7 +224,7 @@ class AcceptOrder extends Component {
                                                 <TableSortLabel
                                                     active={orderBy === column.id}
                                                     direction={order}
-                                                    onClick={this.handleRequestSort}
+                                                    onClick={this.createSortHandler(column.id)}
                                                 >
                                                     {column.label}
                                                 </TableSortLabel>
@@ -259,147 +257,3 @@ class AcceptOrder extends Component {
 }
 
 export default AcceptOrder;
-
-/*import React, { Component } from 'react';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import TableSortLabel from '@material-ui/core/TableSortLabel';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from '@material-ui/core/styles/colorManipulator'
-
-class AcceptOrder extends Component {
-    constructor(props) {
-        super(props);
-        this.componentDidMount = this.componentDidMount.bind(this);
-        this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
-    }
-    componentDidMount(){
-        axios.get(this.url)
-            .then((response) => {
-                console.log(response);
-                this.setState({
-                    data: response
-                })
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    }
-    handleSelectAllClick = (event, checked) => {
-        if (checked) {
-            this.setState({ selected: this.state.data.map(n => n.id) });
-            return;
-        }
-        this.setState({ selected: [] });
-    };
-
-    handleClick = (event, id) => {
-        const { selected } = this.state;
-        const selectedIndex = selected.indexOf(id);
-        let newSelected = [];
-
-        if (selectedIndex === -1) {
-            newSelected = newSelected.concat(selected, id);
-        } else if (selectedIndex === 0) {
-            newSelected = newSelected.concat(selected.slice(1));
-        } else if (selectedIndex === selected.length - 1) {
-            newSelected = newSelected.concat(selected.slice(0, -1));
-        } else if (selectedIndex > 0) {
-            newSelected = newSelected.concat(
-                selected.slice(0, selectedIndex),
-                selected.slice(selectedIndex + 1),
-            );
-        }
-
-        this.setState({ selected: newSelected });
-    };
-
-    render(){
-        const { onSelectAllClick, order, orderBy, numSelected, rowCount } = this.props;
-        return(
-            <Table aria-labelledby="tableTitle" numSelected={selected.length}>
-                <TableHead>
-                    <TableRow>
-                        <TableCell padding="checkbox">
-                            <Checkbox
-                                indeterminate={numSelected > 0 && numSelected < rowCount}
-                                checked={numSelected === rowCount}
-                                onChange={onSelectAllClick}
-                            />
-                        </TableCell>
-                        {this.state.data.map(column => {
-                            return (
-                                <TableCell
-                                    key={column.id}
-                                    numeric={column.numeric}
-                                    padding={column.disablePadding ? 'none' : 'default'}
-                                    sortDirection={orderBy === column.id ? order : false}
-                                >
-                                    <Tooltip
-                                        title="Sort"
-                                        placement={column.numeric ? 'bottom-end' : 'bottom-start'}
-                                        enterDelay={300}
-                                    >
-                                        <TableSortLabel
-                                            active={orderBy === column.id}
-                                            direction={order}
-                                            onClick={this.createSortHandler(column.id)}
-                                        >
-                                            {column.label}
-                                        </TableSortLabel>
-                                    </Tooltip>
-                                </TableCell>
-                            );
-                        }, this)}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {this.state.data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
-                        const isSelected = this.isSelected(n.id);
-                        return (
-                            <TableRow
-                                hover
-                                onClick={event => this.handleClick(event, n.id)}
-                                role="checkbox"
-                                aria-checked={isSelected}
-                                tabIndex={-1}
-                                key={n.id}
-                                selected={isSelected}
-                            >
-                                <TableCell padding="checkbox">
-                                    <Checkbox checked={isSelected} />
-                                </TableCell>
-                                <TableCell component="th" scope="row" padding="none">
-                                    {n.name}
-                                </TableCell>
-                                <TableCell numeric>{n.calories}</TableCell>
-                                <TableCell numeric>{n.fat}</TableCell>
-                                <TableCell numeric>{n.carbs}</TableCell>
-                                <TableCell numeric>{n.protein}</TableCell>
-                            </TableRow>
-                        );
-                    })}
-                    {emptyRows > 0 && (
-                        <TableRow style={{ height: 49 * emptyRows }}>
-                            <TableCell colSpan={6} />
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-        )
-    }
-}
-
-export default AcceptOrder
-*/

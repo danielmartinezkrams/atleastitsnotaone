@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import {Link } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 class Login extends Component {
     constructor(props) {
@@ -33,7 +34,6 @@ class Login extends Component {
                         firstName: response.data.firstName,
                         lastName: response.data.lastName,
                         email: response.data.email,
-                        password: response.data.password,
                     };
                     this.setState({
                         isLoggedIn: true,
@@ -63,7 +63,7 @@ class Login extends Component {
         let alert = null;
         if(this.state.alert){
             if (!this.state.isLoggedIn) {
-                alert = <div className="alert">Login Unsuccessful<button onClick={() => this.closeAlert()}>Try Again</button></div>;
+                alert = <div className="alert">Login Unsuccessful<Button color="primary" onClick={() => this.closeAlert()}>Try Again</Button></div>;
             } else {
                 let to = "/";
                 /*
@@ -81,7 +81,9 @@ class Login extends Component {
                     <h3>
                         {this.props.info.firstName} {this.props.info.lastName}<br/>
                     </h3>
-                    <button onClick={this.logout}>Log Out</button>
+                    <Button color="primary" onClick={this.logout}>
+                        Log Out
+                    </Button>
                 </div>
             )
         }
@@ -95,9 +97,13 @@ class Login extends Component {
                     <br />
                     Password <input className="pw" name="password" type="password" onChange={this.handleChange}/>
                     <br />
-                    <input className="confirmButton" type="submit" value="Submit"/>
+                    <Button className="confirmButton" type="submit" color="secondary">
+                       Submit
+                    </Button>
                 </form>
-                <Link to="createAccount">Create Account</Link>
+                <Button  type="submit" color="primary">
+                    <Link to="createAccount">Create Account</Link>
+                </Button>
 
             </div>
         );
