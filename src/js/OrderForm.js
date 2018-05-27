@@ -13,10 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
 import menuData from '../database/sarah'
 
 const display = {
@@ -206,9 +206,6 @@ class OrderForm extends Component {
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>
-                <Button variant="raised" color="secondary" onClick={this.toggle} disabled={!this.props.isLoggedIn}>
-                    Place Order
-                </Button>
                 {alert}
                 <br />
                 <Paper>
@@ -227,10 +224,10 @@ class OrderForm extends Component {
                         <div/>
                         <div>
                             {selected.length > 0 ? (
-                                    <Tooltip title="Delete">
-                                        <IconButton aria-label="Delete">
-                                            <DeleteIcon />
-                                        </IconButton>
+                                    <Tooltip title="submit">
+                                        <Button variant="raised" color="secondary" onClick={this.toggle} disabled={!this.props.isLoggedIn}>
+                                            Place Order
+                                        </Button>
                                     </Tooltip>
                                 ) : (
                                     <Tooltip title="Filter list">
@@ -301,4 +298,17 @@ class OrderForm extends Component {
     }
 }
 
-export default OrderForm;
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+});
+
+export default withStyles(styles)(OrderForm);

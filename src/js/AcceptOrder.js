@@ -13,7 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
+import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 
@@ -62,16 +62,25 @@ class AcceptOrder extends Component {
     };
 
     handleSubmit(){
-        for(let i = 0; i < this.state.selected.length; i++){
-            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
-                .then((response) => {
-                    console.log(response);
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        }
+        axios.get(this.url + "/" + this.state.selected[0])
+            .then((response) => {
+                console.log(response);
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
+    /*
+     for(let i = 0; i < this.state.selected.length; i++){
+     axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
+     .then((response) => {
+     console.log(response);
+     })
+     .catch(function (error) {
+     console.log(error);
+     });
+     }
+     */
 
     handleClick = (event, id) => {
         const { selected } = this.state;
@@ -95,6 +104,7 @@ class AcceptOrder extends Component {
     componentDidMount(){
         axios.get(this.url)
             .then((response) => {
+                console.log(response);
                 let orders = [];
                 const today = new Date();
                 let month = today.getMonth() + 1;
@@ -165,9 +175,7 @@ class AcceptOrder extends Component {
         }
         return (
             <Paper>
-                <Button variant="raised" onClick={this.handleSubmit} color="secondary" disabled={!this.props.isLoggedIn}>
-                    Accept Order
-                </Button>
+
                 <Toolbar>
                     <div>
                         {selected.length > 0 ? (
@@ -183,10 +191,10 @@ class AcceptOrder extends Component {
                     <div/>
                     <div>
                         {selected.length > 0 ? (
-                                <Tooltip title="Delete">
-                                    <IconButton aria-label="Delete">
-                                        <DeleteIcon />
-                                    </IconButton>
+                                <Tooltip title="Submit">
+                                    <Button variant="raised" onClick={this.handleSubmit} color="secondary" disabled={!this.props.isLoggedIn}>
+                                        Accept Order
+                                    </Button>
                                 </Tooltip>
                             ) : (
                                 <Tooltip title="Filter list">
@@ -256,4 +264,17 @@ class AcceptOrder extends Component {
     }
 }
 
-export default AcceptOrder;
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+});
+
+export default withStyles(styles)(AcceptOrder);
