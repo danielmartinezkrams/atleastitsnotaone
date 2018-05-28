@@ -23,8 +23,8 @@ class AcceptOrder extends Component {
         this.state = {
             order: 'asc',
             orderBy: 'calories',
+            data: [],
             selected: [],
-            data: "",
             page: 0,
             rowsPerPage: 5.
         };
@@ -62,26 +62,16 @@ class AcceptOrder extends Component {
     };
 
     handleSubmit(){
-        axios.get(this.url + "/" + this.state.selected[0])
-            .then((response) => {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        for(let i = 0; i < this.state.selected.length; i++){
+            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
+                .then((response) => {
+                    console.log(response);
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+        }
     }
-    /*
-     for(let i = 0; i < this.state.selected.length; i++){
-     axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
-     .then((response) => {
-     console.log(response);
-     })
-     .catch(function (error) {
-     console.log(error);
-     });
-     }
-     */
-
     handleClick = (event, id) => {
         const { selected } = this.state;
         const selectedIndex = selected.indexOf(id);
@@ -138,8 +128,16 @@ class AcceptOrder extends Component {
         const { data, order, orderBy, rowsPerPage, page, selected } = this.state;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
         let body = null;
-        console.log(selected);
-        if(data !== ""){
+        if(isEmpty(data)){
+            body =(
+                <TableBody>
+                    <TableRow>
+                        <TableCell colSpan="6">No Pending Orders</TableCell>
+                    </TableRow>
+                </TableBody>
+            )
+        }
+        else{
             body = (
                 <TableBody>
                 {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
@@ -262,6 +260,17 @@ class AcceptOrder extends Component {
             </Paper>
         );
     }
+}
+
+function isEmpty(obj) {
+    if (obj === null) return true;
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+    if (typeof obj !== "object") return true;
+    for (const key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+    return true;
 }
 
 const styles = theme => ({
