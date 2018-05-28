@@ -63,7 +63,7 @@ class AcceptOrder extends Component {
 
     handleSubmit(){
         for(let i = 0; i < this.state.selected.length; i++){
-            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
+            axios.get(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
                 .then((response) => {
                     console.log(response);
                 })
@@ -177,7 +177,7 @@ class AcceptOrder extends Component {
                 <Toolbar>
                     <div>
                         {selected.length > 0 ? (
-                                <Typography color="inherit" variant="subheading">
+                                <Typography color="inherit" variant="subheading" style={{padding: "20px"}}>
                                     {selected.length} selected
                                 </Typography>
                             ) : (

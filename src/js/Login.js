@@ -110,28 +110,4 @@ class Login extends Component {
     }
 }
 
-/*
-if(response.data === null){
-                    this.setState({
-                        alert: true
-                    });
-                }
-                else{
-                    const info = {
-                        class: response.data.class,
-                        first: response.data.first,
-                        last: response.data.last,
-                        studentID: response.data.studentID,
-                        _id: response.data._id,
-                        from: response.data.first + " " + response.data.last + " " + response.data.class
-                    };
-                    this.setState({
-                        isLoggedIn: true,
-                        alert: true,
-                        info: info
-                    });
-                    this.props.function(this.state.isLoggedIn, info);
-                }
- */
-
 export default Login
