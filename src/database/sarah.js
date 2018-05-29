@@ -18,7 +18,7 @@ const menuData = [
     {
         "name": "Bongo Burger",
         "location": "2154 Center St, Berkeley, CA 94704",
-        "menu": [createData("All American Burger", 3.95), createData("Turkey Burger", 4.25), createData("Mushroom Burger", 5.25), createData("Bacon Burger", 5.25), createData("Polish Sausage", 3.95), createData("Hot Dog", 3.25), createData("Soda Large", 1.75), createData("Soda Medium", 1.50), createData("Soda Small", 1.20), createData("Shish Kaba Sandwich", 7.50), createData("Chicken Sandwich", 6.95), createData("Persian Burger Sandwich", 6.25), createData("Half-Persian Burger Sandwich", 3.95)]
+        "menu": [createData("All American Burger", 4.25), createData("Turkey Burger", 4.50), createData("Mushroom Burger", 5.50), createData("Bacon Burger", 5.50), createData("Polish Sausage", 3.95), createData("Hot Dog", 3.25), createData("Soda Large", 1.75), createData("Soda Medium", 1.50), createData("Soda Small", 1.20), createData("Shish Kaba Sandwich", 7.75), createData("Chicken Sandwich", 7.15), createData("Persian Burger Sandwich", 6.50), createData("Half-Persian Burger Sandwich", 3.95)]
     },
     {
         "name": "Saigon Express",
