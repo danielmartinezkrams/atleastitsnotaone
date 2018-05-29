@@ -30,12 +30,12 @@ const menuData = [
     {
         "name": "Fresco",
         "location": "",
-        "menu": [createData("Taco (select ingredients below))", 2.50 - 3.80), createData("Burrito (select ingredients below)", 5.50 - 9), createData("Quesadilla (select ingredients below)", 6), createData("Plate (select ingredients below)", 8.50), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Guac", .50), createData("Sour Cream",), createData("Tortilla Chips",), createData("Water",)]
+        "menu": [createData("Taco (select ingredients below))", 2.50), createData("Burrito (select ingredients below)", 5.50), createData("Quesadilla (select ingredients below)", 6), createData("Plate (select ingredients below)", 8.50), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Guac", .50), createData("Sour Cream",), createData("Tortilla Chips",), createData("Water",)]
     },
     {
         "name": "Arinell's",
         "location": "",
-        "menu":[createData("Neopolitan (regular)", 3), createData("Sicilian (deep dish)", ), createData("Vegan Slice", 3.25), createData("With olives", ), createData("With extra cheese", ), createData("S/L Coke", 1.50), createData("S/L Diet Coke", ), createData("S/L Sprite", ), createData("S/L Root Beer", ), createData("S/L Fruit Punch", ), createData("S/L Lemonade", )]
+        "menu":[createData("Neopolitan (regular)", 3), createData("Sicilian (deep dish)", 3.50), createData("Vegan Slice", 3.25), createData("With toppings (specify in notes)", 0), createData("S Coke", 1.25), createData("L Coke", 1.50), createData("S Diet Coke", 1.25), createData("L Diet Coke",1.50), createData("S Sprite", 1.25), createData("L Sprite", 1.50), createData("S Root Beer", 1.25), createData("L Root Beer", 1.50), createData("S Fruit Punch", 1.25), createData("L Fruit Punch", 1.50), createData("S Lemonade", 1.25), createData("L Lemonade", 1.50)]
 
     }
 ];
