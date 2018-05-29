@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import axios from "axios";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -17,6 +18,30 @@ import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 
+function isEmpty(obj) {
+    if (obj === null) return true;
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+    if (typeof obj !== "object") return true;
+    for (const key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+    return true;
+}
+
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+    },
+    table: {
+        minWidth: 1020,
+    },
+    tableWrapper: {
+        overflowX: 'auto',
+    },
+});
+
 class AcceptOrder extends Component {
     constructor(props, context) {
         super(props, context);
@@ -29,6 +54,7 @@ class AcceptOrder extends Component {
             rowsPerPage: 5.
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.getData = this.getData.bind(this);
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Restaurant' },
@@ -63,9 +89,10 @@ class AcceptOrder extends Component {
 
     handleSubmit(){
         for(let i = 0; i < this.state.selected.length; i++){
-            axios.get(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
+            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
                 .then((response) => {
                     console.log(response);
+                    this.getData()
                 })
                 .catch(function (error) {
                     console.log(error);
@@ -92,6 +119,10 @@ class AcceptOrder extends Component {
     };
 
     componentDidMount(){
+        this.getData();
+    }
+
+    getData(){
         axios.get(this.url)
             .then((response) => {
                 console.log(response);
@@ -126,18 +157,17 @@ class AcceptOrder extends Component {
 
     render() {
         const { data, order, orderBy, rowsPerPage, page, selected } = this.state;
+        console.log(data);
+        const { classes } = this.props;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
-        let body = null;
-        if(isEmpty(data)){
-            body =(
-                <TableBody>
-                    <TableRow>
-                        <TableCell colSpan="6">No Pending Orders</TableCell>
-                    </TableRow>
-                </TableBody>
-            )
-        }
-        else{
+        let body = (
+            <TableBody>
+                <TableRow>
+                    <TableCell colSpan="6">No Pending Orders</TableCell>
+                </TableRow>
+            </TableBody>
+        );
+        if(!isEmpty(data)){
             body = (
                 <TableBody>
                 {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
@@ -172,10 +202,11 @@ class AcceptOrder extends Component {
             </TableBody>)
         }
         return (
-            <Paper>
-
-                <Toolbar>
-                    <div>
+            <Paper className={classes.root}>
+                <Toolbar className={classNames(classes.root, {
+                    [classes.highlight]: selected.length > 0,
+                })}>
+                    <div className={classes.title}>
                         {selected.length > 0 ? (
                                 <Typography color="inherit" variant="subheading" style={{padding: "20px"}}>
                                     {selected.length} selected
@@ -186,8 +217,8 @@ class AcceptOrder extends Component {
                                 </Typography>
                             )}
                     </div>
-                    <div/>
-                    <div>
+                    <div className={classes.spacer}/>
+                    <div className={classes.actions}>
                         {selected.length > 0 ? (
                                 <Tooltip title="Submit">
                                     <Button variant="raised" onClick={this.handleSubmit} color="secondary" disabled={!this.props.isLoggedIn}>
@@ -203,8 +234,8 @@ class AcceptOrder extends Component {
                             )}
                     </div>
                 </Toolbar>
-                <div>
-                    <Table aria-labelledby="tableTitle">
+                <div className={classes.tableWrapper}>
+                    <Table aria-labelledby="tableTitle" className={classes.table}>
                         <TableHead>
                             <TableRow>
                                 <TableCell padding="checkbox">
@@ -261,29 +292,5 @@ class AcceptOrder extends Component {
         );
     }
 }
-
-function isEmpty(obj) {
-    if (obj === null) return true;
-    if (obj.length > 0)    return false;
-    if (obj.length === 0)  return true;
-    if (typeof obj !== "object") return true;
-    for (const key in obj) {
-        if (hasOwnProperty.call(obj, key)) return false;
-    }
-    return true;
-}
-
-const styles = theme => ({
-    root: {
-        width: '300px',
-        marginTop: theme.spacing.unit * 3,
-    },
-    table: {
-        minWidth: 1020,
-    },
-    tableWrapper: {
-        overflowX: 'auto',
-    },
-});
 
 export default withStyles(styles)(AcceptOrder);

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
 import axios from "axios";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -155,6 +156,7 @@ class OrderForm extends Component {
 
     render(){
         const { menu, order, orderBy, rowsPerPage, page, selected } = this.state;
+        const { classes } = this.props;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, menu.length - page * rowsPerPage);
         let body = null;
         if(menu !== ""){
@@ -221,11 +223,13 @@ class OrderForm extends Component {
                 <h2> Restaurant: {this.props.match.params.name} </h2>
                 {alert}
                 <br />
-                <Paper>
-                    <Toolbar>
-                        <div>
+                <Paper className={classes.root}>
+                    <Toolbar className={classNames(classes.root, {
+                        [classes.highlight]: selected.length > 0,
+                    })}>
+                        <div className={classes.title}>
                             {selected.length > 0 ? (
-                                    <Typography color="inherit" variant="subheading">
+                                    <Typography color="inherit" variant="subheading" style={{padding: "20px"}}>
                                         {selected.length} selected
                                     </Typography>
                                 ) : (
@@ -234,8 +238,8 @@ class OrderForm extends Component {
                                     </Typography>
                                 )}
                         </div>
-                        <div/>
-                        <div>
+                        <div className={classes.spacer}/>
+                        <div className={classes.actions}>
                             {selected.length > 0 ? (
                                     <Tooltip title="submit">
                                         <Button variant="raised" color="secondary" onClick={this.toggle} disabled={!this.props.isLoggedIn}>
@@ -251,8 +255,8 @@ class OrderForm extends Component {
                                 )}
                         </div>
                     </Toolbar>
-                    <div>
-                        <Table aria-labelledby="tableTitle">
+                    <div className={classes.tableWrapper}>
+                        <Table aria-labelledby="tableTitle" className={classes.table}>
                             <TableHead >
                                 <TableRow>
                                     <TableCell padding="checkbox">
