@@ -89,14 +89,19 @@ class AcceptOrder extends Component {
 
     handleSubmit(){
         for(let i = 0; i < this.state.selected.length; i++){
-            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
-                .then((response) => {
-                    console.log(response);
-                    this.getData()
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            for(let j = 0; j < this.state.data.length; j++){
+                if(this.state.data[j]._id === this.state.selected[i]){
+                    axios.put(this.url + "/" + this.state.selected[i], {"name": this.state.data[j].name, "order": this.state.data[j].order, "cost": this.state.data[j].cost, "time": this.state.data[j].time, "note": this.state.data[j].note, "client": this.state.data[j].client, "fulfilledBy": this.props.info})
+                        .then((response) => {
+                            console.log(response);
+                            this.getData()
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+                }
+            }
+
         }
     }
     handleClick = (event, id) => {

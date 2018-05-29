@@ -65,17 +65,11 @@ class Login extends Component {
             if (!this.state.isLoggedIn) {
                 alert = <div className="alert">Login Unsuccessful<Button color="primary" onClick={() => this.closeAlert()}>Try Again</Button></div>;
             } else {
-                let to = "/";
-                /*
-                const array = this.props.match.params;
-                if(!isEmpty(array)){
-                    to = "/teacher/" + array.refer
-                }
-                */
-                alert = <div className="alert">{this.state.info.firstName} {this.state.info.lastName} Login Successful <Link onClick={() => this.closeAlert()} to={to}>Continue</Link></div>
+                alert = <div className="alert">{this.state.info.firstName} {this.state.info.lastName} Login Successful <Link onClick={() => this.closeAlert()} to={"/"}>Continue</Link></div>
             }
         }
         else if(this.state.isLoggedIn){
+
             return (
                 <div className="Login">
                     <h3>
