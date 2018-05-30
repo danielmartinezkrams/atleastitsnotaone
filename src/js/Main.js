@@ -24,7 +24,7 @@ class Main extends Component {
 
     render(){
         return(
-            <Paper className="content" elevation={2} color="primary">
+            <Paper className="content" elevation={2}>
             <Switch>
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
