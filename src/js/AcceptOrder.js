@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
+import menuData from "../database/sarah"
 
 function isEmpty(obj) {
     if (obj === null) return true;
@@ -211,13 +212,26 @@ class AcceptOrder extends Component {
 
         let modal = null;
         if(alert && !isEmpty(lozo)){
+            let restaurant = lozo.data.name;
+            let location = null;
+            for(let i = 0; i < menuData.length; i++){
+                if(menuData[i].name === restaurant){
+                    location = menuData[i].location
+                }
+            }
+            let note = null;
+            if(lozo.data.note !== ""){
+                note = "Note: " + lozo.data.note
+            }
             modal = (
                     <div className="alert">
-                        Thanks for accepting {this.data.client.firstName}'s order! <br />
+                        Thanks for accepting {lozo.data.client.firstName}'s order! <br />
+                        Go to {lozo.data.name} at {location}<br/>
                         ${lozo.data.cost}<br/>
                         You will make $1.79<br/>
                         Pick-up time: {lozo.data.time.slice(11)}<br/>
                         The Order: {lozo.data.order}<br/>
+                        {note}
                     </div>
                 )
 
