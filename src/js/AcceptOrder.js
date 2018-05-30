@@ -208,6 +208,7 @@ class AcceptOrder extends Component {
                 )}
             </TableBody>)
         }
+
         let modal = null;
         if(alert && !isEmpty(lozo)){
             modal = (
