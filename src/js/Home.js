@@ -12,6 +12,7 @@ class Home extends Component {
                 To begin, please first sign into your account or create a new one, and then select either "Place Order" or "Make Delivery."
             </div>
         )
+
     }
 }
 

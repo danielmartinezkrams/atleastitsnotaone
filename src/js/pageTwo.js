@@ -12,6 +12,12 @@ import bongo from '../img/bongo.jpeg'
 import saigon from '../img/saigon.jpeg'
 import frescos from '../img/fresco.jpeg'
 import arinells from '../img/arinells.jpeg'
+import ks from '../img/ks.jpeg'
+import pk from '../img/purplekow.jpeg'
+import ikes from '../img/ikes.jpeg'
+import x from '../img/xtreme.jpg'
+import cancun from '../img/cancun.jpeg'
+
 
 class pageTwo extends Component {
     render(){
@@ -22,6 +28,14 @@ class pageTwo extends Component {
             {img: saigon , title:"Saigon Express" },
             {img: frescos, title:"Fresco"},
             {img: arinells, title:"Arinell's"},
+            {img: ks, title: "K's Cafe"},
+            {img: pk, title: "Purple Kow"},
+            {img: ikes, title: "Ike's Sandwiches" },
+            {img: x, title: "eXtreme Pizza"},
+            {img: cancun, title: "Cancun"},
+
+
+
         ];
         return(
             <div>
