@@ -218,9 +218,16 @@ class OrderForm extends Component {
                 </div>
             );
         }
+        let location = null;
+        for(let i = 0; i < menuData.length; i++){
+            if(menuData[i].name === this.props.match.params.name){
+                location = menuData[i].location
+            }
+        }
         return(
             <div>
                 <h2> Restaurant: {this.props.match.params.name} </h2>
+                <h5> {location} </h5>
                 {alert}
                 <br />
                 <Paper className={classes.root}>

@@ -17,6 +17,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { withStyles } from '@material-ui/core/styles';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
+import menuData from "../database/sarah"
 
 function isEmpty(obj) {
     if (obj === null) return true;
@@ -51,7 +52,9 @@ class AcceptOrder extends Component {
             data: [],
             selected: [],
             page: 0,
-            rowsPerPage: 5.
+            rowsPerPage: 5,
+            alert: false,
+            lozo: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.getData = this.getData.bind(this);
@@ -89,14 +92,21 @@ class AcceptOrder extends Component {
 
     handleSubmit(){
         for(let i = 0; i < this.state.selected.length; i++){
-            axios.put(this.url + "/" + this.state.selected[i], {"fulfilledBy": this.props.info})
-                .then((response) => {
-                    console.log(response);
-                    this.getData()
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            for(let j = 0; j < this.state.data.length; j++){
+                if(this.state.data[j]._id === this.state.selected[i]){
+                    axios.put(this.url + "/" + this.state.selected[i], {"name": this.state.data[j].name, "order": this.state.data[j].order, "cost": this.state.data[j].cost, "time": this.state.data[j].time, "note": this.state.data[j].note, "client": this.state.data[j].client, "fulfilledBy": this.props.info})
+                        .then((response) => {
+                            console.log(response);
+                            this.getData();
+                            this.setState({"alert": true, "lozo": response})
+                        })
+                        .catch(function (error) {
+                            console.log(error);
+                        });
+
+                }
+            }
+
         }
     }
     handleClick = (event, id) => {
@@ -125,7 +135,6 @@ class AcceptOrder extends Component {
     getData(){
         axios.get(this.url)
             .then((response) => {
-                console.log(response);
                 let orders = [];
                 const today = new Date();
                 let month = today.getMonth() + 1;
@@ -156,8 +165,7 @@ class AcceptOrder extends Component {
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
     render() {
-        const { data, order, orderBy, rowsPerPage, page, selected } = this.state;
-        console.log(data);
+        const { data, order, orderBy, rowsPerPage, page, selected, alert, lozo } = this.state;
         const { classes } = this.props;
         const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
         let body = (
@@ -201,6 +209,33 @@ class AcceptOrder extends Component {
                 )}
             </TableBody>)
         }
+
+        let modal = null;
+        if(alert && !isEmpty(lozo)){
+            let restaurant = lozo.data.name;
+            let location = null;
+            for(let i = 0; i < menuData.length; i++){
+                if(menuData[i].name === restaurant){
+                    location = menuData[i].location
+                }
+            }
+            let note = null;
+            if(lozo.data.note !== ""){
+                note = "Note: " + lozo.data.note
+            }
+            modal = (
+                    <div className="alert">
+                        Thanks for accepting {lozo.data.client.firstName}'s order! <br />
+                        Go to {lozo.data.name} at {location}<br/>
+                        ${lozo.data.cost}<br/>
+                        You will make $1.79<br/>
+                        Pick-up time: {lozo.data.time.slice(11)}<br/>
+                        The Order: {lozo.data.order}<br/>
+                        {note}
+                    </div>
+                )
+
+        }
         return (
             <Paper className={classes.root}>
                 <Toolbar className={classNames(classes.root, {
@@ -218,6 +253,7 @@ class AcceptOrder extends Component {
                             )}
                     </div>
                     <div className={classes.spacer}/>
+                    {modal}
                     <div className={classes.actions}>
                         {selected.length > 0 ? (
                                 <Tooltip title="Submit">

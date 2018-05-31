@@ -3,26 +3,27 @@
 }
 
 .App-logo {
-  height: 175px;
+  height: 185px;
 }
 .App-header {
-  background-color: #222;
+  background-color: #DB2D44;
   padding: 20px;
   color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .App-intro {
   font-size: large;
 }
 
+
 .alert{
   position: absolute;
   z-index: 1;
-  background: white;
+  background: lightgray;
   border-style: solid;
   border-width: 2px;
   width: 50%;
@@ -33,5 +34,6 @@
 }
 
 .content{
-  padding: 10px
+  padding: 10px;
+  background: #54ACED;
 }
