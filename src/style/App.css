@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 175px;
+  height: 185px;
 }
 .App-header {
   background-color: #DB2D44;
@@ -12,7 +12,7 @@
 }
 
 .App-title {
-  font-size: 1.5em;
+  font-size: 2em;
 }
 
 .App-intro {
@@ -22,7 +22,7 @@
 .alert{
   position: absolute;
   z-index: 1;
-  background: white;
+  background: lightgray;
   border-style: solid;
   border-width: 2px;
   width: 50%;
