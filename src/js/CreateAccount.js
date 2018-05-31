@@ -19,12 +19,13 @@ class CreateAccount extends Component {
     }
     handleSubmit(e){
         e.preventDefault();
-        axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, password: this.state.password})
+        axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, phone: this.state.phone, password: this.state.password})
             .then(response => {
                 const info = {
                     firstName: response.data.firstName,
                     lastName: response.data.lastName,
                     email: response.data.email,
+                    phone: response.data.phone,
                     password: response.data.password,
                 };
                 this.props.function(true, info);
@@ -40,13 +41,15 @@ class CreateAccount extends Component {
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
                     <br />
-                    First <input className="name" name="firstName" type="text" autocomplete='given-name' onChange={this.handleChange}/>
+                    First <input className="name" name="firstName" type="text" autoComplete='given-name' onChange={this.handleChange} required/>
                     <br />
-                    Last <input className="name" name="lastName" type="text" autocomplete='family-name' onChange={this.handleChange}/>
+                    Last <input className="name" name="lastName" type="text" autoComplete='family-name' onChange={this.handleChange} required/>
                     <br />
-                    Email <input className="email" name="email" type="email" autocomplete='email' onChange={this.handleChange}/>
+                    Email <input className="email" name="email" type="email" autoComplete='email' onChange={this.handleChange} required/>
                     <br />
-                    Create Password <input className="pw" name="password" type="password" onChange={this.handleChange}/>
+                    Phone <input className="phone" name="phone" type="phone" autoComplete='phone' onChange={this.handleChange} required/>
+                    <br />
+                    Create Password <input className="pw" name="password" type="password" onChange={this.handleChange} required/>
                     <br />
                     <input className="confirmButton" type="submit" value="Submit"/>
                 </form>
