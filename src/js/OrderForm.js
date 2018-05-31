@@ -220,7 +220,7 @@ class OrderForm extends Component {
         }
         let location = null;
         for(let i = 0; i < menuData.length; i++){
-            if(menuData[i].name == this.props.match.params.name){
+            if(menuData[i].name === this.props.match.params.name){
                 location = menuData[i].location
             }
         }
