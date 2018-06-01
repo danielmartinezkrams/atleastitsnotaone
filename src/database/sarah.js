@@ -38,7 +38,7 @@ const menuData = [
     {
         "name": "El Burro Picante",
         "location": "2021 University Ave, Berkeley, CA 94704",
-        "menu":[createData("Burrito (regular)", 5), createData("Donkey Burrito", 10), createData("Super Burrito", 7), createData("Taco", 2), createData("Extra beans", 1), createData("Extra rice", 1), createData("Guacamole", 0.95), createData("Flautas", 6.95), createData("Regular Nachos", 6.95), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Agua Fresca", 2.25), createData("Coke", 1.50), createData("Jarito (mandarin)", 1.25), createData("S Horchata", 1.95), createData("L Horchata", 2.25), createData("Bottled water", 1.50)]
+        "menu":[createData("Burrito (regular)", 7), createData("Donkey Burrito", 10), createData("Super Burrito", 8), createData("Taco", 2.25), createData("Extra beans", 1), createData("Extra rice", 1), createData("Guacamole", 0.95), createData("Flautas", 6.95), createData("Regular Nachos", 6.95), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Agua Fresca", 2.25), createData("Coke", 1.50), createData("Jarito (mandarin)", 1.25), createData("S Horchata", 1.95), createData("L Horchata", 2.25), createData("Bottled water", 1.50)]
     }
 ];
 
