@@ -34,6 +34,31 @@ const menuData = [
         "name": "Arinell's",
         "location": "2109 Shattuck Ave, Berkeley, CA 94704",
         "menu":[createData("Neopolitan (regular)", 3), createData("Sicilian (deep dish)", 3.50), createData("Vegan Slice", 3.25), createData("With toppings (specify in notes)", 0), createData("S Coke", 1.25), createData("L Coke", 1.50), createData("S Diet Coke", 1.25), createData("L Diet Coke",1.50), createData("S Sprite", 1.25), createData("L Sprite", 1.50), createData("S Root Beer", 1.25), createData("L Root Beer", 1.50), createData("S Fruit Punch", 1.25), createData("L Fruit Punch", 1.50), createData("S Lemonade", 1.25), createData("L Lemonade", 1.50)]
+    },
+    {
+        "name": "K's Cafe",
+        "location": "2002 Center Street, Berkeley, CA 94704",
+        "menu": [createData("Cheese bagel",), createData("Plain bagel",), createData("With butter",), createData("With cream cheese",), createData("With tomato",), createData("With avocado",), createData("20 oz Mocha Frappuccino", 4.15), createData("20 oz Caramel Frappuccino", 4.14), createData("M Chai Latte", 3.50), createData("M Hot Chocolate", 2.75), createData("M Mocha", 3.75), createData("M House Coffee", 1.90), createData("Vitamin Water (specify color in notes)",)]
+    },
+    {
+        "name": "Purple Kow",
+        "location": "2164 Center St Berkeley, CA 94704",
+        "menu": [createData("Roast Oolong Milk Tea (specify black or green in notes for ALL milk teas)", 4.89), createData("Honey Milk Tea", 4.89), createData("Hazelnut Milk Tea", 4.89), createData("Almond Milk Tea", 4.89), createData("Chocolate Milk Tea", 4.89), createData("Matcha Milk Green Tea", 4.89), createData("Purple Kow Tea Crema",4.99), createData("Lychee Black Tea Crema", 4.99), createData("Matcha Crema", 4.99), createData("Peach Oolong Crema", 4.99), createData("Passionfruit QQ (QQ = boba & lychee jelly)", 4.99), createData("Peach QQ", 4.99), createData("Salt & Pepper Chicken Nuggets", 5.25), createData("Fried Cheese Sticks", 5.99)]
+    },
+    {
+        "name": "Ike's Sandwiches",
+        "location": "",
+        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
+    },
+    {
+        "name": "Toss",
+        "location": "",
+        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
+    },
+    {
+        "name": "Cancun",
+        "location": "",
+        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
     }
 ];
 
