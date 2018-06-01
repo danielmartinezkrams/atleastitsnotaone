@@ -195,7 +195,7 @@ class AcceptOrder extends Component {
                             </TableCell>
                             <TableCell component="th" scope="row" padding="none">{n.name}</TableCell>
                             <TableCell>{n.order.toString()}</TableCell>
-                            <TableCell numeric>{n.cost}</TableCell>
+                            <TableCell numeric>{n.cost.toFixed(2)}</TableCell>
                             <TableCell >{n.time.slice(11)}</TableCell>
                             <TableCell >{n.note}</TableCell>
                             <TableCell >{n.client.firstName + " " + n.client.lastName}</TableCell>
