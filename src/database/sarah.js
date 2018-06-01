@@ -34,6 +34,11 @@ const menuData = [
         "name": "Arinell's",
         "location": "2109 Shattuck Ave, Berkeley, CA 94704",
         "menu":[createData("Neopolitan (regular)", 3), createData("Sicilian (deep dish)", 3.50), createData("Vegan Slice", 3.25), createData("With toppings (specify in notes)", 0), createData("S Coke", 1.25), createData("L Coke", 1.50), createData("S Diet Coke", 1.25), createData("L Diet Coke",1.50), createData("S Sprite", 1.25), createData("L Sprite", 1.50), createData("S Root Beer", 1.25), createData("L Root Beer", 1.50), createData("S Fruit Punch", 1.25), createData("L Fruit Punch", 1.50), createData("S Lemonade", 1.25), createData("L Lemonade", 1.50)]
+    },
+    {
+        "name": "El Burro Picante",
+        "location": "2021 University Ave, Berkeley, CA 94704",
+        "menu":[createData("Burrito (regular)", 5), createData("Donkey Burrito", 10), createData("Super Burrito", 7), createData("Taco", 2), createData("Extra beans", 1), createData("Extra rice", 1), createData("Guacamole", 0.95), createData("Flautas", 6.95), createData("Regular Nachos", 6.95), createData("Steak",), createData("Chicken",), createData("Carnitas",), createData("Veggie",), createData("Fish",), createData(" Black Beans",), createData("Pinto Beans",), createData("Salsa",), createData("Cheese",), createData("Agua Fresca", 2.25), createData("Coke", 1.50), createData("Jarito (mandarin)", 1.25), createData("S Horchata", 1.95), createData("L Horchata", 2.25), createData("Bottled water", 1.50)]
     }
 ];
 
