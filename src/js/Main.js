@@ -23,8 +23,10 @@ class Main extends Component {
     }
 
     render(){
+
         return(
             <Paper className="content" elevation={2}>
+
             <Switch>
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
@@ -40,5 +42,7 @@ class Main extends Component {
 }
 
 //render={() => <pageTwo isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}
+//<button onClick={send("Hi", 5106127276)}>Hi</button>
+
 
 export default Main;

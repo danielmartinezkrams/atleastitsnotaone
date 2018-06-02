@@ -65,6 +65,7 @@ class App extends Component {
                     <h1 className="App-title">B-Eats</h1>
                     <div>
                         <div>
+
                             <IconButton aria-label="More" aria-haspopup="true" aria-owns={anchorEl ? 'long-menu' : null} onClick={this.handleClick} style={{color: "white"}} >
                                 <MoreVertIcon />
                             </IconButton>
