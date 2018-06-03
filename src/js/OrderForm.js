@@ -43,7 +43,11 @@ const styles = theme => ({
 const today = new Date();
 let month = today.getMonth() + 1;
 if(month < 10) month = "0" + month;
-const date = today.getFullYear() + '-' + (month) + '-' + today.getDate();
+let day = today.getDate();
+if(day < 10){
+    day = "0" + day
+}
+const date = today.getFullYear() + '-' + (month) + '-' + day;
 
 class OrderForm extends Component {
     constructor(props) {

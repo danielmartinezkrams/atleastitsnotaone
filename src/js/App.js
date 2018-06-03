@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import logo from '../img/B-Eats.png';
 import '../style/App.css';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
@@ -43,20 +42,9 @@ class App extends Component {
     handleClose = () => {
         this.setState({ anchorEl: null });
     };
-    
-    sendSms = () => {
-        axios.post(this.url)
-            .then(res => {
-                console.log(res)
-            })
-            .catch(function (error) {
-                console.log(error);
-            })
-    };
 
     render() {
         const { anchorEl } = this.state;
-        this.sendSms();
         return (
         <MuiThemeProvider theme={theme}>
              <div className="App">
