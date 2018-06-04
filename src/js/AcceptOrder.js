@@ -92,9 +92,9 @@ class AcceptOrder extends Component {
 
     sendSms(to, note){
         axios.post(this.url + "send", {"to": to, "note": note})
-            .then(res => {
+            /*.then(res => {
                 console.log(res)
-            })
+            })*/
             .catch(function (error) {
                 console.log(error);
             })
@@ -144,7 +144,6 @@ class AcceptOrder extends Component {
     getData(){
         axios.get(this.url + "orders")
             .then((response) => {
-                console.log(response);
                 let orders = [];
                 const today = new Date();
                 let month = today.getMonth() + 1;
