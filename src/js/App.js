@@ -29,6 +29,7 @@ const theme = createMuiTheme({
 class App extends Component {
     constructor(props) {
         super(props);
+        this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/send";
         this.state = {
             anchorEl: null,
         }
@@ -44,7 +45,6 @@ class App extends Component {
 
     render() {
         const { anchorEl } = this.state;
-
         return (
         <MuiThemeProvider theme={theme}>
              <div className="App">
@@ -53,6 +53,7 @@ class App extends Component {
                     <h1 className="App-title">B-Eats</h1>
                     <div>
                         <div>
+
                             <IconButton aria-label="More" aria-haspopup="true" aria-owns={anchorEl ? 'long-menu' : null} onClick={this.handleClick} style={{color: "white"}} >
                                 <MoreVertIcon />
                             </IconButton>

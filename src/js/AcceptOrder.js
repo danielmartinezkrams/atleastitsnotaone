@@ -57,8 +57,9 @@ class AcceptOrder extends Component {
             lozo: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         this.getData = this.getData.bind(this);
-        this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/orders";
+        this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/";
         this.columnData = [
             { id: 'name', numeric: false, disablePadding: true, label: 'Restaurant' },
             { id: 'order', numeric: false, disablePadding: false, label: 'Order' },
@@ -90,23 +91,31 @@ class AcceptOrder extends Component {
         this.setState({ selected: [] });
     };
 
+    sendSms(to, note){
+        axios.post(this.url + "send", {"to": to, "note": note})
+            /*.then(res => {
+                console.log(res)
+            })*/
+            .catch(function (error) {
+                console.log(error);
+            })
+    };
+
     handleSubmit(){
         for(let i = 0; i < this.state.selected.length; i++){
             for(let j = 0; j < this.state.data.length; j++){
                 if(this.state.data[j]._id === this.state.selected[i]){
-                    axios.put(this.url + "/" + this.state.selected[i], {"name": this.state.data[j].name, "order": this.state.data[j].order, "cost": this.state.data[j].cost, "time": this.state.data[j].time, "note": this.state.data[j].note, "client": this.state.data[j].client, "fulfilledBy": this.props.info})
+                    axios.put(this.url + "orders/" + this.state.selected[i], {"name": this.state.data[j].name, "order": this.state.data[j].order, "cost": this.state.data[j].cost, "time": this.state.data[j].time, "note": this.state.data[j].note, "client": this.state.data[j].client, "fulfilledBy": this.props.info})
                         .then((response) => {
-                            console.log(response);
                             this.getData();
-                            this.setState({"alert": true, "lozo": response})
+                            this.setState({"alert": true, "lozo": response});
+                            this.sendSms(this.state.data[j].client.phone, "Your order of " + response.data.order.toString() + " will be picked up by " + response.data.fulfilledBy.firstName + " " + response.data.fulfilledBy.lastName);
                         })
                         .catch(function (error) {
                             console.log(error);
                         });
-
                 }
             }
-
         }
     }
     handleClick = (event, id) => {
@@ -133,14 +142,18 @@ class AcceptOrder extends Component {
     }
 
     getData(){
-        axios.get(this.url)
+        axios.get(this.url + "orders")
             .then((response) => {
                 let orders = [];
                 const today = new Date();
                 let month = today.getMonth() + 1;
                 if(month < 10) month = "0" + month;
-                const date = today.getFullYear() + '-' + (month) + '-' + today.getDate();
-                for(let i = 0; i < response.data.length; i++){
+                let day = today.getDate();
+                if(day < 10){
+                    day = "0" + day
+                }
+                const date = today.getFullYear() + '-' + (month) + '-' + day;
+                for(let i = 15; i < response.data.length; i++){
                     if(!response.data[i].fulfilledBy && response.data[i].time.includes(date)){
                         orders.push(response.data[i])
                     }
@@ -161,6 +174,9 @@ class AcceptOrder extends Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
+     handleClose(){
+         this.setState({"alert": false})
+     }
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
@@ -220,7 +236,7 @@ class AcceptOrder extends Component {
                 }
             }
             let note = null;
-            if(lozo.data.note !== ""){
+            if(lozo.data.note.length > 0){
                 note = "Note: " + lozo.data.note
             }
             modal = (
@@ -232,9 +248,9 @@ class AcceptOrder extends Component {
                         Pick-up time: {lozo.data.time.slice(11)}<br/>
                         The Order: {lozo.data.order}<br/>
                         {note}
+                        <Button onClick={this.handleClose}>Close</Button>
                     </div>
                 )
-
         }
         return (
             <Paper className={classes.root}>

@@ -1,16 +1,19 @@
 {
-  "name": "atleastitsnotaone",
+  "name": "b-eats",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^1.1.0",
     "@material-ui/icons": "^1.1.0",
     "axios": "^0.18.0",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.2",
     "material-ui": "^0.20.1",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.4",
+    "react-text-mask": "^5.4.1",
     "twilio": "^3.17.1",
     "whatwg-fetch": "^2.0.4"
   },

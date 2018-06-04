@@ -43,7 +43,11 @@ const styles = theme => ({
 const today = new Date();
 let month = today.getMonth() + 1;
 if(month < 10) month = "0" + month;
-const date = today.getFullYear() + '-' + (month) + '-' + today.getDate();
+let day = today.getDate();
+if(day < 10){
+    day = "0" + day
+}
+const date = today.getFullYear() + '-' + (month) + '-' + day;
 
 class OrderForm extends Component {
     constructor(props) {
@@ -105,7 +109,6 @@ class OrderForm extends Component {
     handleSubmit(food, cost, e){
         axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "note": this.state.note, "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
-                console.log(response);
                 this.setState({"toggle": false})
             })
             .catch(function (error) {
@@ -321,7 +324,5 @@ class OrderForm extends Component {
         )
     }
 }
-
-//deleting empty rows takes out space below table
 
 export default withStyles(styles)(OrderForm);
