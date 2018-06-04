@@ -47,7 +47,6 @@ class Login extends Component {
         e.preventDefault();
         axios.get(this.url + this.state.email)
             .then((response) => {
-                console.log(response);
                 if(response.data === null || response.data.password !== this.state.password){
                     this.setState({
                         alert: true

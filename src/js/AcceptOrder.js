@@ -57,6 +57,7 @@ class AcceptOrder extends Component {
             lozo: []
         };
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = this.handleClose.bind(this);
         this.getData = this.getData.bind(this);
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/";
         this.columnData = [
@@ -106,7 +107,6 @@ class AcceptOrder extends Component {
                 if(this.state.data[j]._id === this.state.selected[i]){
                     axios.put(this.url + "orders/" + this.state.selected[i], {"name": this.state.data[j].name, "order": this.state.data[j].order, "cost": this.state.data[j].cost, "time": this.state.data[j].time, "note": this.state.data[j].note, "client": this.state.data[j].client, "fulfilledBy": this.props.info})
                         .then((response) => {
-                            console.log(response);
                             this.getData();
                             this.setState({"alert": true, "lozo": response});
                             this.sendSms(this.state.data[j].client.phone, "Your order of " + response.data.order.toString() + " will be picked up by " + response.data.fulfilledBy.firstName + " " + response.data.fulfilledBy.lastName);
@@ -174,6 +174,9 @@ class AcceptOrder extends Component {
     handleChangeRowsPerPage = event => {
         this.setState({ rowsPerPage: event.target.value });
     };
+     handleClose(){
+         this.setState({"alert": false})
+     }
 
     isSelected = id => this.state.selected.indexOf(id) !== -1;
 
@@ -233,7 +236,7 @@ class AcceptOrder extends Component {
                 }
             }
             let note = null;
-            if(lozo.data.note !== ""){
+            if(lozo.data.note.length > 0){
                 note = "Note: " + lozo.data.note
             }
             modal = (
@@ -245,9 +248,9 @@ class AcceptOrder extends Component {
                         Pick-up time: {lozo.data.time.slice(11)}<br/>
                         The Order: {lozo.data.order}<br/>
                         {note}
+                        <Button onClick={this.handleClose}>Close</Button>
                     </div>
                 )
-
         }
         return (
             <Paper className={classes.root}>

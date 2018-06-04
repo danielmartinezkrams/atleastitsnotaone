@@ -109,7 +109,6 @@ class OrderForm extends Component {
     handleSubmit(food, cost, e){
         axios.post(this.url, {"name": this.props.match.params.name, "order": food, "cost": cost, "time": this.state.time, "note": this.state.note, "client": this.props.info, "fulfilledBy": false})
             .then((response) => {
-                console.log(response);
                 this.setState({"toggle": false})
             })
             .catch(function (error) {
