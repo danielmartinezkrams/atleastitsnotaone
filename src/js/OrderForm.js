@@ -326,6 +326,4 @@ class OrderForm extends Component {
     }
 }
 
-//deleting empty rows takes out space below table
-
 export default withStyles(styles)(OrderForm);

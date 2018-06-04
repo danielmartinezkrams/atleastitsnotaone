@@ -1,5 +1,61 @@
 import React, {Component} from 'react';
 import axios from "axios";
+import classNames from 'classnames';
+import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import TextField from '@material-ui/core/TextField';
+import MaskedInput from "react-text-mask";
+import FormControl from '@material-ui/core/FormControl';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
+import { Link } from 'react-router-dom';
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    margin: {
+        margin: theme.spacing.unit,
+    },
+    withoutLabel: {
+        marginTop: theme.spacing.unit * 3,
+    },
+    textField: {
+        flexBasis: 200,
+    },
+    formControl: {
+        margin: theme.spacing.unit,
+    },
+});
+
+function TextMaskCustom(props) {
+    const { inputRef, ...other } = props;
+    return (
+        <MaskedInput
+            {...other}
+            ref={inputRef}
+            mask={['(', /[1-9]/, /\d/, /\d/, ')', ' ', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+            placeholderChar={'\u2000'}
+            showMask
+        />
+    );
+}
+
+function isEmpty(obj) {
+    if (obj === null) return true;
+    if (obj.length > 0)    return false;
+    if (obj.length === 0)  return true;
+    if (typeof obj !== "object") return true;
+    for (const key in obj) {
+        if (hasOwnProperty.call(obj, key)) return false;
+    }
+    return true;
+}
 
 class CreateAccount extends Component {
     constructor(props) {
@@ -9,53 +65,150 @@ class CreateAccount extends Component {
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/users";
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
+            amount: '',
+            password: '',
+            weight: '',
+            weightRange: '',
+            showPassword: false,
         }
     }
+
+    handleMouseDownPassword = event => {
+        event.preventDefault();
+    };
+
+    handleClickShowPassword = () => {
+        this.setState({ showPassword: !this.state.showPassword });
+    };
 
     handleChange(e){
         this.setState({
             [e.target.name]: e.target.value,
         });
     }
+
     handleSubmit(e){
         e.preventDefault();
-        axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, phone: this.state.phone, password: this.state.password})
+        axios.get(this.url + "/" + this.state.email)
             .then(response => {
-                const info = {
-                    firstName: response.data.firstName,
-                    lastName: response.data.lastName,
-                    email: response.data.email,
-                    phone: response.data.phone,
-                    password: response.data.password,
-                };
-                this.props.function(true, info);
+                if(this.state.verify === this.state.password && isEmpty(response)){
+                    axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, phone: this.state.phone, password: this.state.password})
+                        .then(response => {
+                            const info = {
+                                firstName: response.data.firstName,
+                                lastName: response.data.lastName,
+                                email: response.data.email,
+                                phone: response.data.phone,
+                                password: response.data.password,
+                            };
+                            this.props.function(true, info);
+                        })
+                        .catch((err)=> {
+                            console.log(err);
+                        });
+                }
             })
             .catch((err)=> {
                 console.log(err);
             });
     }
-
     render() {
+        const { classes } = this.props;
         return (
             <div className="Login">
+                <Link to='/login'>Back</Link>
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
+                    <br/>
+                    <TextField
+                        id="firstName"
+                        label="First Name"
+                        className={classes.textField}
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                        autoComplete='given-name'
+                        margin="normal"
+                    />
+                    <br/>
+                    <TextField
+                        id="lastName"
+                        label="Last Name"
+                        className={classes.textField}
+                        value={this.state.name}
+                        onChange={this.handleChange}
+                        autoComplete='family-name'
+                        margin="normal"
+                    />
+                    <br/>
+                    <TextField
+                        autoFocus
+                        margin="dense"
+                        id="name"
+                        label="Email"
+                        type="email"
+                        onChange={this.handleChange}
+                    />
                     <br />
-                    First <input className="name" name="firstName" type="text" autoComplete='given-name' onChange={this.handleChange} required/>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="formatted-text-mask-input" />
+                        <Input
+                            value={this.state.phone}
+                            name="phone"
+                            onChange={this.handleChange}
+                            id="phone"
+                            inputComponent={TextMaskCustom}
+                        />
+                    </FormControl>
                     <br />
-                    Last <input className="name" name="lastName" type="text" autoComplete='family-name' onChange={this.handleChange} required/>
-                    <br />
-                    Email <input className="email" name="email" type="email" autoComplete='email' onChange={this.handleChange} required/>
-                    <br />
-                    Phone <input className="phone" name="phone" type="phone" autoComplete='phone' onChange={this.handleChange} required/>
-                    <br />
-                    Create Password <input className="pw" name="password" type="password" onChange={this.handleChange} required/>
-                    <br />
-                    <input className="confirmButton" type="submit" value="Submit"/>
+                    <FormControl className={classNames(classes.margin, classes.textField)}>
+                        <InputLabel htmlFor="adornment-password">Password</InputLabel>
+                        <Input
+                            id="adornment-password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            value={this.state.password}
+                            name="password"
+                            onChange={this.handleChange}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="Toggle password visibility"
+                                        onClick={this.handleClickShowPassword}
+                                        onMouseDown={this.handleMouseDownPassword}
+                                    >
+                                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <br/>
+                    <FormControl className={classNames(classes.margin, classes.textField)}>
+                        <InputLabel htmlFor="adornment-verify-password">Verify Password</InputLabel>
+                        <Input
+                            id="adornment-verify-password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            value={this.state.verify}
+                            name="verify"
+                            onChange={this.handleChange}
+                            endAdornment={
+                                <InputAdornment position="end">
+                                    <IconButton
+                                        aria-label="Toggle password visibility"
+                                        onClick={this.handleClickShowPassword}
+                                        onMouseDown={this.handleMouseDownPassword}
+                                    >
+                                        {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
+                                    </IconButton>
+                                </InputAdornment>
+                            }
+                        />
+                    </FormControl>
+                    <br/>
+                    <Button type="submit" className={classes.button}>Submit</Button>
                 </form>
             </div>
         );
     }
 }
 
-export default CreateAccount
+export default withStyles(styles)(CreateAccount);
