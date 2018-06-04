@@ -48,17 +48,17 @@ const menuData = [
     {
         "name": "Ike's Sandwiches",
         "location": "",
-        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
+        "menu": [createData("Bruce Wayne (specify bread type in notes; default is dutch crunch)", 9.99), createData("By George!", 8.98), createData("Going Home For Thanksgiving", 9.99), createData("John Wayne", 8.98), createData("Julius Caesar", 8.98), createData("Marilyn Monroe", 8.98), createData("Meatless Mike", 9.99), createData("Michael Jordan", 9.99), createData("Pee Wee", 9.99), createData("",), createData("Pilgrim", 9.99), createData("Shattuck", 9.99), createData("Tony Stark", 9.99), createData("Golden Bear", 8.98)]
     },
     {
         "name": "Toss",
         "location": "",
-        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
+        "menu": [createData("Noodles (add 1 WOK-Toss and 1 Protein)",), createData("White Steamed Rice",), createData("Brown Steamed Rice",), createData("White Fried Rice",), createData("Brown Fried Rice",), createData("WOK-TOSS: Thai (spicy sauce)",), createData("WOK-TOSS: Malay (peanut sauce)",), createData("WOK-TOSS: Chinese (soy sauce)",), createData("WOK-TOSS: Japanese (sweet & sour)",), createData("Tomyum Soup",), createData("Clear Soup",), createData("Laksa Soup",), createData("Green Curry",), createData("Red Curry", ), createData("PROTEIN: Tofu", 9.95), createData("PROTEIN: Chicken", 9.95), createData("PROTEIN: Beef", 9.95), createData("PROTEIN: Pork", 9.95), createData("PROTEIN: King Prawn", 11.95), createData("PROTEIN: Combination", 11.95), createData("Water", ), createData("Thai Iced Tea", ), createData("Edamame", 4), createData("Prawn Chips", 4), createData("Fried Octopus", 6), createData("Veggie Steamed Dumpling", 5), createData("Chicken Salay Stick", 3), createData("BBQ Pork Stick", 3),  ]
     },
     {
         "name": "Cancun",
         "location": "",
-        "menu": [createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",), createData("",)]
+        "menu": [createData()]
     }
 ];
 
