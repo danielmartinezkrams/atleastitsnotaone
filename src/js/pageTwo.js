@@ -17,7 +17,11 @@ import pk from '../img/purplekow.jpeg'
 import ikes from '../img/ikes.jpeg'
 import x from '../img/xtreme.jpg'
 import cancun from '../img/cancun.jpeg'
-
+import sz from '../img/Sandzone.jpg'
+import toss from '../img/toss.jpg'
+import lilplearn from '../img/lilplearn.jpg'
+import g61 from '../img/guac61.jpeg'
+import bp from '../img/bp.jpeg'
 
 class pageTwo extends Component {
     render(){
@@ -33,6 +37,14 @@ class pageTwo extends Component {
             {img: ikes, title: "Ike's Sandwiches" },
             {img: x, title: "eXtreme Pizza"},
             {img: cancun, title: "Cancun"},
+            {img: sz, title: "Sandwich Zone"},
+            {img: toss, title:"Toss Noodle Bar"},
+            {img: lilplearn, title: "Little Plearn"},
+            {img: g61, title: "Guacamole 61"},
+            {img: bp, title: "El Burro Picante"}
+
+
+
 
 
 
