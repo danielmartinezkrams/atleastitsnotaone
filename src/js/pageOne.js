@@ -12,8 +12,8 @@ class PageOne extends Component {
         }
         return (
             <Switch>
-                <Route exact path='/pageOne' component={PageTwo}/>
-                <Route path='/pageOne/:name'  render={({ match }) => ( <OrderForm  match={match} isLoggedIn={isLoggedIn} info={info}/> )} />}) />
+                <Route exact path='/placeorder' component={PageTwo}/>
+                <Route path='/placeorder/:name'  render={({ match }) => ( <OrderForm  match={match} isLoggedIn={isLoggedIn} info={info}/> )} />}) />
             </Switch>
         )
     }
