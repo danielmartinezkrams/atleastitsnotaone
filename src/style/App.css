@@ -34,5 +34,9 @@
 
 .content{
   padding: 10px;
-  background: #bb95eb;
+  background: #ebd060;
+}
+
+.menuLink{
+    width: 100%
 }

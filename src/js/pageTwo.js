@@ -42,12 +42,6 @@ class pageTwo extends Component {
             {img: lilplearn, title: "Little Plearn"},
             {img: g61, title: "Guacamole 61"},
             {img: bp, title: "El Burro Picante"}
-
-
-
-
-
-
         ];
         return(
             <div>
@@ -58,7 +52,7 @@ class pageTwo extends Component {
                         </GridListTile>
                         {tileData.map(tile => (
                             <GridListTile key={tile.img}>
-                                <Link to={`pageOne/${tile.title}`}>
+                                <Link to={`placeorder/${tile.title}`}>
                                 <img src={tile.img} alt={tile.title} />
                                 <GridListTileBar
                                     title={tile.title}

@@ -18,7 +18,8 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
-import menuData from '../database/sarah'
+import menuData from '../database/sarah';
+import { Link } from 'react-router-dom';
 
 const display = {
     display: 'block'
@@ -211,7 +212,7 @@ class OrderForm extends Component {
                     <form>
                         <h3>Review Your Order:</h3><br />
                         Items: {food.toString()}<br/>
-                        Cost: ${cost.toFixed(2)}<br />
+                        Cost: ${(cost*1.08).toFixed(2)}<br />
                         <TextField id="datetime-local" name="time" onChange={this.handleChange} label="Pickup Time" type="datetime-local" defaultValue={date + "T12:15"} required InputLabelProps={{shrink: true,}}/><br />
                         <label>Note: </label><input type="text" name="note" onChange={this.handleChange}/><br />
                         <Button variant="outlined" color="primary" cost={cost} food={food} onClick={this.handleSubmit.bind(this, food, cost)} disabled={!this.props.isLoggedIn}>
@@ -232,6 +233,9 @@ class OrderForm extends Component {
                 <h2> Restaurant: {this.props.match.params.name} </h2>
                 <h5> {location} </h5>
                 {alert}
+                <Button color="primary">
+                    <Link to='/placeorder'>Back</Link>
+                </Button>
                 <br />
                 <Paper className={classes.root}>
                     <Toolbar className={classNames(classes.root, {

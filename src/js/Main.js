@@ -30,9 +30,9 @@ class Main extends Component {
             <Switch>
                 <div className="content">
                     <Route exact path="/" render={() => <Home isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
-                    <Route path="/pageOne" render={() => <PageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
+                    <Route path="/placeorder" render={() => <PageOne isLoggedIn={this.state.isLoggedIn} info={this.state.info}/>}/>
                     <Route path="/login" render={() => <Login isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
-                    <Route path="/createAccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
+                    <Route path="/createaccount" render={() => <CreateAccount isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                     <Route path="/makedelivery" render={() => <AcceptOrder isLoggedIn={this.state.isLoggedIn} function={this.handler} info={this.state.info}/>}/>
                 </div>
             </Switch>
