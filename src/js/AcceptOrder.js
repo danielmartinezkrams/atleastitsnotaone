@@ -93,9 +93,9 @@ class AcceptOrder extends Component {
 
     sendSms(to, note){
         axios.post(this.url + "send", {"to": to, "note": note})
-            /*.then(res => {
+            .then(res => {
                 console.log(res)
-            })*/
+            })
             .catch(function (error) {
                 console.log(error);
             })

@@ -59,9 +59,11 @@ class App extends Component {
                             </IconButton>
                             <Menu id="long-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} PaperProps={{style: {width: 200,},}}>
                                 <MenuItem>
-                                    <Button className="menuLink" color="primary">
-                                        <Link to="/">Home</Link>
-                                    </Button>
+                                    <Link to="/">
+                                        <Button className="menuLink" color="primary">
+                                            Home
+                                        </Button>
+                                    </Link>
                                 </MenuItem>
                                 <MenuItem>
                                     <Button className="menuLink" color="primary">
