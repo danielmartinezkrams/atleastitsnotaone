@@ -233,7 +233,9 @@ class OrderForm extends Component {
                 <h2> Restaurant: {this.props.match.params.name} </h2>
                 <h5> {location} </h5>
                 {alert}
-                <Link to='/placeorder'>Back</Link>
+                <Button color="primary">
+                    <Link to='/placeorder'>Back</Link>
+                </Button>
                 <br />
                 <Paper className={classes.root}>
                     <Toolbar className={classNames(classes.root, {

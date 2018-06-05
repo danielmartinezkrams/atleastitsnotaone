@@ -6,6 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Main from './Main';
 
@@ -53,27 +54,33 @@ class App extends Component {
                     <h1 className="App-title">B-Eats</h1>
                     <div>
                         <div>
-
                             <IconButton aria-label="More" aria-haspopup="true" aria-owns={anchorEl ? 'long-menu' : null} onClick={this.handleClick} style={{color: "white"}} >
                                 <MoreVertIcon />
                             </IconButton>
-                            <Menu  id="long-menu"
-                                   anchorEl={anchorEl}
-                                   open={Boolean(anchorEl)}
-                                   onClose={this.handleClose}
-                                   PaperProps={{
-                                       style: {
-                                           width: 200,
-                                       },
-                                   }}>
-                                <MenuItem><Link to="/">Home</Link></MenuItem>
-                                <MenuItem><Link to="/makedelivery">Make Delivery</Link></MenuItem>
-                                <MenuItem><Link to="/placeorder">Place Order</Link></MenuItem>
-                                <MenuItem><Link to="/login">Login</Link></MenuItem>
+                            <Menu id="long-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} PaperProps={{style: {width: 200,},}}>
+                                <MenuItem>
+                                    <Button className="menuLink" color="primary">
+                                        <Link to="/">Home</Link>
+                                    </Button>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Button className="menuLink" color="primary">
+                                        <Link to="/makedelivery">Make Delivery</Link>
+                                    </Button>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Button className="menuLink" color="primary">
+                                        <Link to="/placeorder">Place Order</Link>
+                                    </Button>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Button className="menuLink" color="primary">
+                                        <Link to="/login">Login</Link>
+                                    </Button>
+                                </MenuItem>
                             </Menu>
                         </div>
                     </div>
-
                  </header>
                  <Main />
             </div>
