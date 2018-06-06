@@ -59,26 +59,32 @@ class App extends Component {
                             </IconButton>
                             <Menu id="long-menu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose} PaperProps={{style: {width: 200,},}}>
                                 <MenuItem>
-                                    <Link to="/">
-                                        <Button className="menuLink" color="primary">
+                                    <Link className="menuLink" to="/">
+                                        <Button fullWidth color="primary">
                                             Home
                                         </Button>
                                     </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Button className="menuLink" color="primary">
-                                        <Link to="/makedelivery">Make Delivery</Link>
-                                    </Button>
+                                    <Link className="menuLink" to="/makedelivery">
+                                        <Button fullWidth color="primary">
+                                            Make Delivery
+                                        </Button>
+                                    </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Button className="menuLink" color="primary">
-                                        <Link to="/placeorder">Place Order</Link>
-                                    </Button>
+                                    <Link className="menuLink" to="/placeorder">
+                                        <Button fullWidth color="primary">
+                                            Place Order
+                                        </Button>
+                                    </Link>
                                 </MenuItem>
                                 <MenuItem>
-                                    <Button className="menuLink" color="primary">
-                                        <Link to="/login">Login</Link>
-                                    </Button>
+                                    <Link className="menuLink" to="/login">
+                                        <Button fullWidth color="primary">
+                                            Login
+                                        </Button>
+                                    </Link>
                                 </MenuItem>
                             </Menu>
                         </div>
