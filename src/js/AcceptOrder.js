@@ -153,7 +153,7 @@ class AcceptOrder extends Component {
                     day = "0" + day
                 }
                 const date = today.getFullYear() + '-' + (month) + '-' + day;
-                for(let i = 15; i < response.data.length; i++){
+                for(let i = 0; i < response.data.length; i++){
                     if(!response.data[i].fulfilledBy && response.data[i].time.includes(date)){
                         orders.push(response.data[i])
                     }

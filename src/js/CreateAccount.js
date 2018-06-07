@@ -12,6 +12,11 @@ import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import { Link } from 'react-router-dom';
 
 const styles = theme => ({
@@ -65,11 +70,8 @@ class CreateAccount extends Component {
         this.url = "https://slkidsbackend.herokuapp.com/berkeleyeats/api/users";
         this.state = {
             isLoggedIn: this.props.isLoggedIn,
-            amount: '',
-            password: '',
-            weight: '',
-            weightRange: '',
             showPassword: false,
+            open: false
         }
     }
 
@@ -87,11 +89,19 @@ class CreateAccount extends Component {
         });
     }
 
+    handleClickOpen = () => {
+
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
     handleSubmit(e){
         e.preventDefault();
         axios.get(this.url + "/" + this.state.email)
             .then(response => {
-                if(this.state.verify === this.state.password && isEmpty(response)){
+                if(this.state.verify === this.state.password && isEmpty(response.data)){
                     axios.post(this.url, {firstName: this.state.firstName, lastName: this.state.lastName, email: this.state.email, phone: this.state.phone, password: this.state.password})
                         .then(response => {
                             const info = {
@@ -102,10 +112,14 @@ class CreateAccount extends Component {
                                 password: response.data.password,
                             };
                             this.props.function(true, info);
+                            this.setState({ open: true , content: "Congratulations " + response.data.firstName + " " + response.data.lastName, to: "/"});
                         })
                         .catch((err)=> {
                             console.log(err);
                         });
+                }
+                else{
+                    this.setState({ open: true , content: "Create Account Fail. Try again.", to: "/createaccount"});
                 }
             })
             .catch((err)=> {
@@ -117,11 +131,31 @@ class CreateAccount extends Component {
         return (
             <div className="Login">
                 <Link to='/login'>Back</Link>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Alert"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {this.state.content}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            <Link to={this.state.to}>
+                                Continue
+                            </Link>
+                        </Button>
+                    </DialogActions>
+                </Dialog>
                 <form className="confirm" onSubmit={this.handleSubmit}>
                     <label className="verification"><h2>Create Account</h2></label>
                     <br/>
                     <TextField
-                        id="firstName"
+                        name="firstName"
                         label="First Name"
                         className={classes.textField}
                         value={this.state.name}
@@ -131,7 +165,7 @@ class CreateAccount extends Component {
                     />
                     <br/>
                     <TextField
-                        id="lastName"
+                        name="lastName"
                         label="Last Name"
                         className={classes.textField}
                         value={this.state.name}
@@ -143,7 +177,7 @@ class CreateAccount extends Component {
                     <TextField
                         autoFocus
                         margin="dense"
-                        id="name"
+                        name="email"
                         label="Email"
                         type="email"
                         onChange={this.handleChange}

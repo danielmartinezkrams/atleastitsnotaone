@@ -129,7 +129,7 @@ class Login extends Component {
         let fulfill = [];
         axios.get(this.url + "orders")
             .then((response) => {
-                for(let i = 13; i < response.data.length; i++){
+                for(let i = 0; i < response.data.length; i++){
                     if(response.data[i].client.email === this.props.info.email && !response.data[i].fulfilledBy){
                         orders.push(response.data[i])
                     }
