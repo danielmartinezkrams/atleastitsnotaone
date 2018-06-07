@@ -38,7 +38,7 @@ const menuData = [
     {
         "name": "K's Cafe",
         "location": "2002 Center Street, Berkeley, CA 94704",
-        "menu": [createData("Cheese bagel",), createData("Plain bagel",), createData("With butter",), createData("With cream cheese",), createData("With tomato",), createData("With avocado",), createData("20 oz Mocha Frappuccino", 4.15), createData("20 oz Caramel Frappuccino", 4.14), createData("M Chai Latte", 3.50), createData("M Hot Chocolate", 2.75), createData("M Mocha", 3.75), createData("M House Coffee", 1.90), createData("Vitamin Water (specify color in notes)",)]
+        "menu": [createData("Cheese bagel", 2.25), createData("With butter", .50), createData("With cream cheese", .75), createData("With tomato", 1.25), createData("With avocado", 1.40), createData("20 oz Mocha Frappuccino", 4.15), createData("20 oz Caramel Frappuccino", 4.14), createData("M Chai Latte", 3.50), createData("M Hot Chocolate", 2.75), createData("M Mocha", 3.75), createData("M House Coffee", 1.90), createData("M Thai Iced Tea", 3.50), createData("M Iced Latte", 3.85), createData("M Iced Mocha", 4.15), createData("M Iced Tea", 2.25)]
     },
     {
         "name": "Purple Kow",
