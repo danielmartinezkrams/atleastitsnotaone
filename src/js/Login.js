@@ -129,18 +129,14 @@ class Login extends Component {
         let fulfill = [];
         axios.get(this.url + "orders")
             .then((response) => {
-                console.log(response);
-                console.log(this.props);
                 for(let i = 13; i < response.data.length; i++){
-                    if(response.data[i].client.email === this.props.info.email){
+                    if(response.data[i].client.email === this.props.info.email && !response.data[i].fulfilledBy){
                         orders.push(response.data[i])
                     }
                     if(response.data[i].fulfilledBy.email === this.props.info.email){
                         fulfill.push(response.data[i])
                     }
                 }
-                console.log(orders);
-                console.log(fulfill);
                 this.setState({"orders": orders, "fulfill": fulfill})
             })
             .catch(function (error) {
@@ -165,6 +161,14 @@ class Login extends Component {
         }
     }
 
+    handleChangePage = (event, page) => {
+        this.setState({ page });
+    };
+
+    handleChangeRowsPerPage = event => {
+        this.setState({ rowsPerPage: event.target.value });
+    };
+
     render() {
         const { classes } = this.props;
         const { order, orderBy, rowsPerPage, page, orders,fulfill } = this.state;
@@ -186,7 +190,7 @@ class Login extends Component {
                         <Toolbar className={classNames(classes.root)}>
                             <div className={classes.title}>
                                 <Typography variant="title" id="tableTitle">
-                                    Orders
+                                    Pending Orders
                                 </Typography>
                             </div>
                             <div className={classes.spacer}/>
@@ -223,6 +227,80 @@ class Login extends Component {
                                 </TableHead>
                                 <TableBody>
                                     {orders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
+                                        return (
+                                            <TableRow
+                                                hover
+                                                tabIndex={-1}
+                                                key={n._id}
+                                            >
+                                                <TableCell component="th" scope="row" padding="none">{n.name}</TableCell>
+                                                <TableCell>{n.order.toString()}</TableCell>
+                                                <TableCell numeric>{n.cost.toFixed(2)}</TableCell>
+                                                <TableCell >{n.time.slice(11)}</TableCell>
+                                                <TableCell >{n.note}</TableCell>
+                                                <TableCell >{n.client.firstName + " " + n.client.lastName}</TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </div>
+                        <TablePagination
+                            component="div"
+                            count={orders.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            backIconButtonProps={{
+                                'aria-label': 'Previous Page',
+                            }}
+                            nextIconButtonProps={{
+                                'aria-label': 'Next Page',
+                            }}
+                            onChangePage={this.handleChangePage}
+                            onChangeRowsPerPage={this.handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                    <Paper className={classes.root}>
+                        <Toolbar className={classNames(classes.root)}>
+                            <div className={classes.title}>
+                                <Typography variant="title" id="tableTitle">
+                                    Fulfilled By Me
+                                </Typography>
+                            </div>
+                            <div className={classes.spacer}/>
+                        </Toolbar>
+                        <div className={classes.tableWrapper}>
+                            <Table aria-labelledby="tableTitle" className={classes.table}>
+                                <TableHead >
+                                    <TableRow>
+                                        {this.columnData.map(column => {
+                                            return (
+                                                <TableCell
+                                                    key={column.id}
+                                                    numeric={column.numeric}
+                                                    padding={column.disablePadding ? 'none' : 'default'}
+                                                    sortDirection={orderBy === column.id ? order : false}
+                                                >
+                                                    <Tooltip
+                                                        title="Sort"
+                                                        placement={column.numeric ? 'bottom-end' : 'bottom-start'}
+                                                        enterDelay={300}
+                                                    >
+                                                        <TableSortLabel
+                                                            active={orderBy === column.id}
+                                                            direction={order}
+                                                            onClick={this.createSortHandler(column.id)}
+                                                        >
+                                                            {column.label}
+                                                        </TableSortLabel>
+                                                    </Tooltip>
+                                                </TableCell>
+                                            );
+                                        }, this)}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {fulfill.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                                         return (
                                             <TableRow
                                                 hover
