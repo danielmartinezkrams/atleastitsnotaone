@@ -213,7 +213,7 @@ class AcceptOrder extends Component {
                             <TableCell>{n.order.toString()}</TableCell>
                             <TableCell numeric>{n.cost.toFixed(2)}</TableCell>
                             <TableCell >{n.time.slice(11)}</TableCell>
-                            <TableCell >{n.note}</TableCell>
+                            <TableCell >{n.note + " "}</TableCell>
                             <TableCell >{n.client.firstName + " " + n.client.lastName}</TableCell>
                         </TableRow>
                     );
@@ -236,7 +236,7 @@ class AcceptOrder extends Component {
                 }
             }
             let note = null;
-            if(lozo.data.note.length > 0){
+            if(lozo.data.note.length > 1){
                 note = "Note: " + lozo.data.note
             }
             modal = (
